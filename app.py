@@ -40,6 +40,9 @@ def view_log(file, type):
         lines = opened_file.readlines()
         return lines
 
+@app.route('/logger-session', methods=['GET'])
+def logger_session():
+    return render_template('logger-session.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

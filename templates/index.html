@@ -1,21 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <title>Logger &#8212; Free Log Analyzer</title>
-</head>
-<body>
-    <h1>Logger &#8212; Free Log Analyzer</h1>
+{% extends 'base.html' %}
 
-    <ul id="top-bar">
-        <li class="top-bar-option"><a href=""></a>File</li>
-        <li class="top-bar-option"><a href=""></a>Edit</li>
-        <li class="top-bar-option"><a href=""></a>View</li>
-        <li class="top-bar-option"><a href=""></a>Format</li>
-    </ul>
+{% block head %}
 
+{% endblock %}
+
+{% block body %}
     <div class="form-field">
         <h3>Import Logs</h3>
         <form method="POST" enctype="multipart/form-data" class="upload">
@@ -31,5 +20,6 @@
             <input type="submit" value="Upload">
         </form>
     </div>
-</body>
-</html>
+
+    <a href="{{ url_for('logger_session') }}">Redirect</a>
+{% endblock %}
