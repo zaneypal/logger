@@ -33,16 +33,12 @@ def index():
             return message
     return render_template('index.html')
 
-@app.route('/loggerfile/<file>.<type>', methods=['GET'])
-def view_log(file, type):
+@app.route('/loggersession/<file>.<type>', methods=['GET'])
+def view_log(file, type:str):
     filename = f"{file}.{type}"
     with open(f"{filetype_paths[type]}/{filename}", 'r', encoding='utf-8') as opened_file:
         lines = opened_file.readlines()
-        return lines
-
-@app.route('/logger-session', methods=['GET'])
-def logger_session():
-    return render_template('logger-session.html')
+        return render_template('logger-session.html', lines=lines)
 
 if __name__ == '__main__':
     app.run(debug=True)

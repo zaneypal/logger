@@ -10,14 +10,14 @@
 <body>
     <header>
         <h1><a href="{{url_for('index')}}">Logger &#8212; Free Log Analyzer</a></h1>
+    
+        <ul id="top-bar">
+            <li class="top-bar-option"><a href=""></a>File</li>
+            <li class="top-bar-option"><a href=""></a>Edit</li>
+            <li class="top-bar-option"><a href=""></a>View</li>
+            <li class="top-bar-option"><a href=""></a>Format</li>
+        </ul>
     </header>
-
-    <ul id="top-bar">
-        <li class="top-bar-option"><a href=""></a>File</li>
-        <li class="top-bar-option"><a href=""></a>Edit</li>
-        <li class="top-bar-option"><a href=""></a>View</li>
-        <li class="top-bar-option"><a href=""></a>Format</li>
-    </ul>
 
     {% block body %}{% endblock %}
 </body>

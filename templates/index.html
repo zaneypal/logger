@@ -5,21 +5,22 @@
 {% endblock %}
 
 {% block body %}
-    <div class="form-field">
-        <h3>Import Logs</h3>
-        <form method="POST" enctype="multipart/form-data" class="upload">
-            <input type="file" accept=".txt, .csv" name="loggerfile">
-            <input type="submit" value="Upload">
-        </form>
-    </div>
+    <div class="form-field-parent">
+        <div class="form-field" id="import-log-field">
+            <h3>Import Logs</h3>
+            <form method="POST" enctype="multipart/form-data" class="upload">
+                <input type="file" accept=".txt, .csv" id="loggerfile" name="loggerfile" hidden>
+                <label for="loggerfile">Upload Logs</label>
+                <input type="submit" value="Upload">
+            </form>
+        </div>
 
-    <div class="form-field">
-        <h3>Paste your logs here</h3>
-        <form method="POST" enctype="multipart/form-data" class="upload">
-            <input type="text" name="log-text-field" class="text-box" size="50" maxlength="50" placeholder="Paste your log text here...">
-            <input type="submit" value="Upload">
-        </form>
+        <div class="form-field">
+            <h3>Paste your logs here</h3>
+            <form method="POST" enctype="multipart/form-data" class="upload">
+                <textarea name="log-text-field" id="text-box" cols="50" rows="10"></textarea>
+                <input type="submit" value="Upload">
+            </form>
+        </div>
     </div>
-
-    <a href="{{ url_for('logger_session') }}">Redirect</a>
 {% endblock %}
