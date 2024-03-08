@@ -15,11 +15,18 @@ h1 {
     height: 20px;
     padding: 8px 1px;
     position: sticky;
+    overflow: hidden;
 }
 
 .top-bar-option {
     display: inline;
     padding: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.top-bar-option:hover {
+    background-color: aliceblue;
 }
 
 label {
