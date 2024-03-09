@@ -28,21 +28,25 @@ def index():
             for filetype in filetype_paths:
                 for file in os.listdir(filetype_paths[filetype]):
                     os.remove(os.path.join(filetype_paths[filetype], file))
-
-        elif 'loggerfile' in request.files:
-            file = request.files['loggerfile']
-            filename = file.filename
-            filetype = filename[filename.find(".")+1:]
-            file.save(os.path.join(app.config[filetype], filename))
-
-            with open("static/cache/recent.txt", 'a+') as save_data:
-                save_data.write(filename+'\n')
-                save_data.close()
-
-            return redirect(url_for('view_log', file=filename[:filename.find(".")], type=filetype))
         else:
-            message = request.form['log-text-field']
-            return message
+            if 'loggerfile' in request.files:
+                file = request.files['loggerfile']
+                filename = file.filename
+                filetype = filename[filename.find(".")+1:]
+                file.save(os.path.join(app.config[filetype], filename))
+
+                with open("static/cache/recent.txt", 'a+') as save_data:
+                    save_data.write(filename+'\n')
+                    #save_data.close()
+
+            else:
+                message = request.form['log-text-field']
+                with open("static/txt-files/newfile.txt", 'w+') as save_data:
+                    save_data.write(message)
+                filename='newfile.txt'
+                filetype='txt'
+            
+            return redirect(url_for('view_log', file=filename[:filename.find(".")], type=filetype))
 
     # Debug Needed    # # #
     recent, recent_files = False, None
