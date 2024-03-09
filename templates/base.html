@@ -10,15 +10,17 @@
 <body>
     <header>
         <h1><a href="{{url_for('index')}}">Logger &#8212; Free Log Analyzer</a></h1>
-    
-        <ul id="top-bar">
-            <li class="top-bar-option"><a href=""></a>File</li>
-            <li class="top-bar-option"><a href=""></a>Edit</li>
-            <li class="top-bar-option"><a href=""></a>View</li>
-            <li class="top-bar-option"><a href=""></a>Format</li>
-        </ul>
+        <div id="top-bar">
+            <button class="top-bar-option" onclick="openSecondBar()">File</button>
+            <button class="top-bar-option" onclick="openSecondBar()">Edit</button>
+            <button class="top-bar-option" onclick="openSecondBar()">View</button>
+            <button class="top-bar-option" onclick="openSecondBar()">Format</button>
+
+        </div>
+        <div id="secondary-bar">s</div>
     </header>
 
     {% block body %}{% endblock %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
