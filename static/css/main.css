@@ -46,21 +46,22 @@ h1 > a {
 label {
     border: solid 1px black;
     border-radius: 5px;
+    display: block;
     padding: 10px;
+    width: 200px;
     background-color: rgb(243, 243, 243);
     color: rgb(39, 111, 206);
     user-select: none;
 }
 
 .form-field-parent {
-    padding-top: 200px;
+    padding-top: 100px;
     display: flex;
-    width: 50%;
 }
 
 #import-log-field {
     margin-top: 10px;
-    margin-left: 100px;
+    margin-left: 50px;
     flex: 2;
 }
 
@@ -68,4 +69,16 @@ label {
     flex: 3;
     gap: 20px;
     padding: 100px;
+}
+
+#text-box {
+    resize: vertical;
+}
+
+.logs-view {
+    margin: 15% 5%;
+}
+
+.log-field {
+    border: solid 2px blue;
 }

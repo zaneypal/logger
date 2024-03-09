@@ -9,8 +9,7 @@
         <div class="form-field" id="import-log-field">
             <h3>Import Logs</h3>
             <form method="POST" enctype="multipart/form-data" class="upload">
-                <input type="file" accept=".txt, .csv" id="loggerfile" name="loggerfile" hidden>
-                <label for="loggerfile">Upload Logs</label>
+                <input type="file" accept=".txt, .csv" id="loggerfile" name="loggerfile">
                 <input type="submit" value="Upload">
             </form>
         </div>
@@ -18,8 +17,8 @@
         <div class="form-field">
             <h3>Paste your logs here</h3>
             <form method="POST" enctype="multipart/form-data" class="upload">
-                <textarea name="log-text-field" id="text-box" cols="50" rows="10"></textarea>
-                <input type="submit" value="Upload">
+                <textarea name="log-text-field" id="text-box" cols="50" rows="10" placeholder="Paste your log text here..."></textarea>
+                <input type="submit" value="Submit">
             </form>
         </div>
     </div>
