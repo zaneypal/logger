@@ -12,6 +12,18 @@
                 <input type="file" accept=".txt, .csv" id="loggerfile" name="loggerfile">
                 <input type="submit" value="Upload">
             </form>
+
+            {%  if turnOn == True %}
+                <h3>Recent</h3>
+                {% for file in recent_files %}
+                <ul>
+                    <li>{{ file }}</li>
+                </ul>
+                {% endfor %}
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="submit" name="clear-recent" value="Clear">
+                </form>
+            {% endif %}
         </div>
 
         <div class="form-field">
@@ -22,4 +34,5 @@
             </form>
         </div>
     </div>
+
 {% endblock %}
