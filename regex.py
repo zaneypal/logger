@@ -33,16 +33,17 @@ def multiregex(pattern, string, index_offset=0):
         indexes.append(index)
         #print(f"indexes: {indexes}\n")
 
-        current_endpoint = indexes[len(indexes)-1][1]-index_offset
+        current_endpoint = indexes[len(indexes)-1][1]
         #print(f"current_endpoint: {current_endpoint}\n")
-        new_string = string[current_endpoint:]
+        new_string = string[current_endpoint-index_offset:]
         #print(f"new_string: {new_string}\n")
         multiregex(pattern, new_string, current_endpoint)
     except ValueError:
         pass
     
 multiregex(pattern, message)
-print(indexes)
+for index in indexes:
+    print(message[index[0]:index[1]])
 
 #regex(pattern['ip_address'], "192.168.1.55")
 #regex(pattern['ip_address'], "funny")
