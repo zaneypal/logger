@@ -24,7 +24,7 @@ message = 'word...this word is a word'
 pattern = re.compile("word")
 
 indexes = []
-def multiregex(pattern, string, index_offset=0):
+def multiregex(pattern, string, index_offset=0, multiline=False):
     global indexes
     try:
         if len(indexes) == 0:

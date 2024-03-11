@@ -12,6 +12,12 @@
             <th>Line</th>
             <th>Log Message</th>
         </tr>
+        {% for line in lines %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td class="log-field">{{ line }}</td>
+        </tr>
+        {% endfor %}
     </table>
 </div>
 {% endblock %}
