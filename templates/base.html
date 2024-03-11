@@ -15,9 +15,15 @@
             <button class="top-bar-option" onclick="openSecondBar()">Edit</button>
             <button class="top-bar-option" onclick="openSecondBar()">View</button>
             <button class="top-bar-option" onclick="openSecondBar()">Format</button>
-
+            <button class="top-bar-option" onclick="openSecondBar()">RegexEdit</button>
         </div>
-        <div id="secondary-bar">s</div>
+
+        <div id="secondary-bar">
+            <form method="POST" enctype="multipart/form-data">
+                <input type="text" placeholder="Search..." name="regex-query">
+                <input type="submit" value="&#8594;">
+            </form>
+        </div>
     </header>
 
     {% block body %}{% endblock %}

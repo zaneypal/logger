@@ -25,7 +25,16 @@ pattern = re.compile("word")
 
 indexes = []
 def multiregex(pattern, string, index_offset=0):
+    global indexes
     try:
+        if len(indexes) == 0:
+            pass
+        else:
+            if type(indexes[-1]) != tuple:
+                if indexes[-1] != pattern:
+                    print("Different search pattern.")
+                    indexes = []
+            
         result = str(re.search(pattern,string))
         #print(f"result: {result}\n")
         index = (int(result[result.find("(")+1:result.find(",")])+index_offset,int(result[result.find(",")+2:result.find(")")])+index_offset)
@@ -40,17 +49,10 @@ def multiregex(pattern, string, index_offset=0):
         multiregex(pattern, new_string, current_endpoint)
     except ValueError:
         pass
+        indexes.append(pattern)
     
 multiregex(pattern, message)
-for index in indexes:
-    print(message[index[0]:index[1]])
-
-#regex(pattern['ip_address'], "192.168.1.55")
-#regex(pattern['ip_address'], "funny")
-#regex(pattern['ip_address'], "255.255.255.256")
-#regex(pattern['ip_address'], "255.255.255.255")
-#
-#regex(pattern['ip_address'], "192.168.1.55", False)
-#regex(pattern['ip_address'], "funny", False)
-#regex(pattern['ip_address'], "255.255.255.256", False)
-#regex(pattern['ip_address'], "255.255.255.255", False)
+#for index in indexes:
+#    if type(index) != tuple:
+#        break
+#    print(message[index[0]:index[1]])

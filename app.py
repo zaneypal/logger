@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
-import os, csv
+from regex import multiregex, indexes, patterns
+import os, csv, re
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///txtfiles.db'
@@ -61,13 +62,27 @@ def index():
     return render_template('index.html', turnOn=recent, recent_files=recent_files)
     # Debug Needed    # # #
 
-@app.route('/loggersession/<file>.<type>', methods=['GET'])
+@app.route('/loggersession/<file>.<type>', methods=['GET', 'POST'])
 def view_log(file, type:str):
     filename = f"{file}.{type}"
+    abs_filepath = f"{filetype_paths[type]}/{filename}"
 
-    with open(f"{filetype_paths[type]}/{filename}", 'r', encoding='utf-8') as opened_file:
-        lines = opened_file.readlines()
-        return render_template('logger-session.html', lines=lines)
+    if request.method == 'POST':
+        if 'regex-query' in request.form:
+            pattern = request.form['regex-query']
+            return redirect(url_for('query_log', file=filename, pattern=pattern))
+    else:
+        with open(abs_filepath, 'r', encoding='utf-8') as opened_file:
+            lines = opened_file.readlines()
+            return render_template('logger-session.html', lines=lines)
+
+@app.route('/loggerquery/<file>/query=<pattern>', methods=['GET'])
+def query_log(file, pattern):
+    type = file[file.find(".")+1:]
+    abs_filepath = f"{filetype_paths[type]}/{file}"
+
+    
+    return render_template('logger-query.html', file=file, pattern=pattern)
 
 if __name__ == '__main__':
     app.run(debug=True)
