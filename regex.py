@@ -1,58 +1,50 @@
 import re
+from debug import debug
 
 patterns = {
     'ip_address': re.compile(r"^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$"),
     'hostname': re.compile(r"^(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?$") 
 }
 
-def regex(pattern, text, exact=True):
-    if exact==False:
-        if re.search(pattern, text):
-            result = str(re.search(pattern, text))
-            print(f"Match Found: {result[result.find("'"):-1]}")
-        else:
-            print("No match found")
-    else:
-        if re.match(pattern, text):
-            result = str(re.match(pattern, text))
-            print(f"Match Found: {result[result.find("'"):-1]}")
-        else:
-            print("No match found")
-
-
 message = 'word...this word is a word'
+message2= "not a word, so no, not a word."
 pattern = re.compile("word")
-
 indexes = []
-def multiregex(pattern, string, index_offset=0, multiline=False):
-    global indexes
+
+def multiregex(pattern, string, indexes, index_offset=0, new_session=True, inverse=False):
     try:
-        if len(indexes) == 0:
-            pass
-        else:
-            if type(indexes[-1]) != tuple:
-                if indexes[-1] != pattern:
-                    print("Different search pattern.")
-                    indexes = []
+        if new_session == True:
+            indexes = []
             
         result = str(re.search(pattern,string))
-        #print(f"result: {result}\n")
         index = (int(result[result.find("(")+1:result.find(",")])+index_offset,int(result[result.find(",")+2:result.find(")")])+index_offset)
-        #print(f"index: {index}\n")
         indexes.append(index)
-        #print(f"indexes: {indexes}\n")
 
         current_endpoint = indexes[len(indexes)-1][1]
-        #print(f"current_endpoint: {current_endpoint}\n")
         new_string = string[current_endpoint-index_offset:]
-        #print(f"new_string: {new_string}\n")
-        multiregex(pattern, new_string, current_endpoint)
+        multiregex(pattern, new_string, indexes, current_endpoint, new_session=False)
     except ValueError:
         pass
-        indexes.append(pattern)
-    
-multiregex(pattern, message)
-#for index in indexes:
-#    if type(index) != tuple:
-#        break
+
+    if inverse == True:
+        inverse_indexes = []
+        counter = 0
+        for index in indexes:
+            if counter == 0: 
+                if index[0] != 0:
+                    inverse_indexes.append((0, index[0]))
+                else:
+                    inverse_indexes.append((indexes[counter][1], indexes[counter+1][0]))
+            else:
+                inverse_indexes.append((indexes[counter-1][1], indexes[counter][0]))
+            if (indexes[-1][1] < len(string)) and index == indexes[-1]:
+                inverse_indexes.append((indexes[counter][1], len(string)))
+            counter += 1
+        indexes = inverse_indexes
+    return indexes
+
+print(multiregex(pattern, message2, indexes))
+print(multiregex(pattern, message2, indexes, inverse=True))
+
+#for index in multiregex(pattern, message, indexes):
 #    print(message[index[0]:index[1]])

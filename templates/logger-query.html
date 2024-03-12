@@ -12,10 +12,10 @@
             <th>Line</th>
             <th>Log Message</th>
         </tr>
-        {% for line in lines %}
+        {% for number in numbers %}
         <tr>
             <td>{{ loop.index }}</td>
-            <td class="log-field">{{ line }}</td>
+            <td class="log-field"><mark>{{ log[number[0]:number[1]] }}</mark></td>
         </tr>
         {% endfor %}
     </table>

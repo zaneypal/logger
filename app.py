@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
-from regex import multiregex, indexes, patterns
+from regex import multiregex, patterns
 import os, csv, re
 
 app = Flask(__name__)
@@ -80,11 +80,14 @@ def view_log(file, type:str):
 def query_log(file, pattern):
     type = file[file.find(".")+1:]
     abs_filepath = f"{filetype_paths[type]}/{file}"
+    indexes = []
     with open(abs_filepath, 'r') as read_data:
-        lines = read_data.readlines()
-        for line in lines:
-            multiregex(pattern, line)
-    return render_template('logger-query.html', file=file, lines=lines, pattern=pattern, indexes=indexes)
+        log = str(read_data.read())
+        multiregex(pattern, log)
+        #Debug
+        #return indexes
+        #debug
+    return render_template('logger-query.html', file=file, log=log, pattern=pattern, index=indexes)
 
 if __name__ == '__main__':
     app.run(debug=True)
