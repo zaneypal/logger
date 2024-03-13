@@ -7,17 +7,6 @@
 {% block body %}
 <div class="logs-view">
     <h1>Search results for {{ pattern }}</h1>
-    <table>
-        <tr>
-            <th>Line</th>
-            <th>Log Message</th>
-        </tr>
-        {% for number in numbers %}
-        <tr>
-            <td>{{ loop.index }}</td>
-            <td class="log-field"><mark>{{ log[number[0]:number[1]] }}</mark></td>
-        </tr>
-        {% endfor %}
-    </table>
+    <h2>{{ result }}</h2>
 </div>
 {% endblock %}

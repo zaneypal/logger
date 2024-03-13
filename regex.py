@@ -12,7 +12,7 @@ mmmhhusssmsyuuh
 283628:)!"""
 pattern = r"m.{4}s"
 
-def multiregex(pattern, msg, indexes, index_offset=0, new_session=True):
+def multiregex(pattern, msg, indexes=[], index_offset=0, new_session=True):
     try:
         if new_session == True:
             indexes = []
@@ -27,25 +27,20 @@ def multiregex(pattern, msg, indexes, index_offset=0, new_session=True):
         pass
     return indexes
 
-indexes = multiregex(pattern, message2, indexes=[])
-message = list(message2)
 
-def html_insert(start, end, list, tag):
-    if tag == "br":
-        for ch in "<br />"[::-1]:
-            list.insert(end, ch)
-    else:
-        for ch in f"</{tag}>"[::-1]:
-            list.insert(end, ch)
-        for ch in f"<{tag}>"[::-1]:
-            list.insert(start, ch)
+def html_insert(charlist, indexlist, tag):
+    charlist = list(charlist)
+    for start, end in reversed(indexlist):
+        if tag == "br":
+            for ch in "<br />"[::-1]:
+                charlist.insert(end, ch)
+        else:
+            for ch in f"</{tag}>"[::-1]:
+                charlist.insert(end, ch)
+            for ch in f"<{tag}>"[::-1]:
+                charlist.insert(start, ch)
+    return "".join(charlist)
+    
 
-for start, end in reversed(indexes):
-    html_insert(start, end, message, "mark")
+indexes = multiregex(pattern, message2)
 
-new_string = "".join(message)
-
-for start, end in reversed(multiregex("\n", new_string, indexes=[])):
-    html_insert(start, end, message, "br")
-
-print(newer_string := "".join(message))
