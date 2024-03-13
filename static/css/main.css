@@ -114,9 +114,16 @@ label {
     padding: 20px;
     margin: 20px;
     background: linear-gradient(135deg,#daeeff, #ffc1d6);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 table {
     border-collapse: separate;
     border-spacing: 60px 20px;
+}
+
+mark {
+    text-shadow: 2px 2px 10px #02ffe2, 1px 1px 4px #daeeff;
+    background-color: transparent;
+    color: rgb(254, 254, 254);
 }

@@ -1,5 +1,6 @@
-from flask import Flask, redirect, render_template, request, Response, url_for
+from flask import Flask, redirect, render_template, request, Markup, url_for
 from flask_sqlalchemy import SQLAlchemy
+from markupsafe import Markup
 from regex import multiregex, html_insert, patterns
 import os, csv, re
 
@@ -84,7 +85,8 @@ def query_log(file, pattern):
         log = str(read_data.read())
         indexes = multiregex(pattern, log)
         result = html_insert(html_insert(log, indexes, "mark"), multiregex("\n", html_insert(log, indexes, "mark")), "br")
-    return Response(result, mimetype='text/html'), render_template('logger-query.html', result=result, pattern=f"'{pattern}'") 
+        result = Markup(result)
+    return render_template('logger-query.html', result=result, pattern=f"'{pattern}'") 
 
 if __name__ == '__main__':
     app.run(debug=True)
