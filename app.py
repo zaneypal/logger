@@ -5,25 +5,31 @@ from regex import multiregex, html_insert, patterns
 import os, csv, re
 
 app = Flask(__name__)
+# Two lines below are not used in this phase but may need to be used later on.
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///txtfiles.db'
 #db = SQLAlchemy(app)
 
+# Stores the pathnames of the directories that hold user-uploaded files
 filetype_paths = {
     'txt': None,
     'csv': None
 }
 
+# Locates the paths of needed directories from the static folder
 for filetype in filetype_paths:
     for dir in os.listdir("static"):
         if dir.__contains__(filetype):
             filetype_paths[filetype] = f"static/{dir}"
 
+# Applying the configurations made necessary by Flask
 app.config['txt'] = filetype_paths['txt']
 app.config['csv'] = filetype_paths['csv']
 
+# Redirects user to homepage when visting the site
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
+        # Deletes all recently uploaded files from history
         if 'clear-recent' in request.form:
             with open("static/cache/recent.txt", 'w') as delete_data:
                 delete_data.close()
@@ -31,6 +37,7 @@ def index():
                 for file in os.listdir(filetype_paths[filetype]):
                     os.remove(os.path.join(filetype_paths[filetype], file))
         else:
+            # User can upload logs as a file with this code
             if 'loggerfile' in request.files:
                 file = request.files['loggerfile']
                 filename = file.filename
@@ -39,8 +46,8 @@ def index():
 
                 with open("static/cache/recent.txt", 'a+') as save_data:
                     save_data.write(filename+'\n')
-                    #save_data.close()
 
+            # Allows user to also upload logs by pasting text
             else:
                 message = request.form['log-text-field']
                 with open("static/txt-files/newfile.txt", 'w+') as save_data:
@@ -51,6 +58,7 @@ def index():
             return redirect(url_for('view_log', file=filename[:filename.find(".")], type=filetype))
 
     # Debug Needed    # # #
+    # Goal is to display names of recently uploaded files on homepage screen
     recent, recent_files = False, None
     storage = []
     with open("static/cache/recent.txt", 'r', encoding='utf-8') as read_data:
@@ -63,6 +71,7 @@ def index():
     return render_template('index.html', turnOn=recent, recent_files=recent_files)
     # Debug Needed    # # #
 
+# Lets user view uploaded file on page
 @app.route('/loggersession/<file>.<type>', methods=['GET', 'POST'])
 def view_log(file, type:str):
     filename = f"{file}.{type}"
@@ -77,7 +86,8 @@ def view_log(file, type:str):
             lines = opened_file.readlines()
             return render_template('logger-session.html', lines=lines)
 
-@app.route('/loggerquery/<file>/query=<pattern>', methods=['GET'])
+# Lets user find regex matches of uploaded log file
+@app.route('/loggerquery/<file>/query=<pattern>', methods=['GET', 'POST'])
 def query_log(file, pattern):
     type = file[file.find(".")+1:]
     abs_filepath = f"{filetype_paths[type]}/{file}"
