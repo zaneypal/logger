@@ -22,10 +22,12 @@
         </div>
 
         <div id="secondary-bar">
-            <form method="POST" enctype="multipart/form-data">
-                <input type="text" placeholder="Search..." name="regex-query">
-                <input type="submit" value="&#8594;">
-            </form>
+            <div id="regex-edit-options">
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="text" placeholder="Search..." name="regex-query" id="regex-query-search-bar">
+                    <input type="submit" id="regex-query-submit-btn" value="&#8594;">
+                </form>
+            </div>
         </div>
     </header>
 

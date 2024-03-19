@@ -2,7 +2,7 @@ from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from markupsafe import Markup
 from regex import multiregex, html_insert, patterns
-import os, csv, re
+import os, csv, re, json
 
 app = Flask(__name__)
 # Two lines below are not used in this phase but may need to be used later on.
@@ -59,14 +59,13 @@ def index():
 
     # Debug Needed    # # #
     # Goal is to display names of recently uploaded files on homepage screen
-    recent, recent_files = False, None
-    storage = []
-    with open("static/cache/recent.txt", 'r', encoding='utf-8') as read_data:
-        if read_data.readlines():
+    # Use Flask SQLAlchemy
+    recent = False
+    recent_files = ""
+    with open("static/cache/recent.txt", 'r+', encoding='utf-8') as read_data:
+        if len(read_data.readlines()) > 0:
             recent = True
-            for line in read_data.readlines():
-                storage.append(line)
-            recent_files = str(storage)
+            recent_files += str(read_data.read())
 
     return render_template('index.html', turnOn=recent, recent_files=recent_files)
     # Debug Needed    # # #

@@ -19,16 +19,16 @@
 }
 
 body {
-    background-color: #85ad5e;
+    background-color: #6cb36c;
 }
 
 header {
     position: fixed;
     top: 0;
-    left: 5%;
-    right: 5%;
+    left: 0;
+    right: 0;
     overflow: hidden;
-    background-color: #8f9f80;
+    background: linear-gradient(to right, #96ff76, #59ffca, #a8ff6a, #84ff84, #bdff6d, #96ffa6)
 }
 
 h1 {
@@ -37,11 +37,11 @@ h1 {
 
 h1 > a {
     text-decoration: none;
-    color: rgb(102, 70, 34);
+    color: #3c9448;
 }
 
 #top-bar {
-    background-color: #e7e7e7;
+    background-color: #ffffff;
     height: fit-content;
     position: relative;
     overflow: hidden;
@@ -57,12 +57,12 @@ h1 > a {
 }
 
 .top-bar-option:hover {
-    background-color: #bedec9;
+    background-color: #aae0b8;
     transition: background-color 0.2s;
 }
 
 .top-bar-option:active {
-    background-color: #bedec99b;
+    background-color: #aae0b89b;
     transition: background-color 0.1s;
 }
 
@@ -74,26 +74,49 @@ h1 > a {
 
 #secondary-bar {
     display: none;
-    background-color: #e7e7e7;
+    background-color: #ffffff;
 }
 
 #secondary-bar.active {
     display: block;
 }
 
-label {
-    border: solid 1px black;
-    border-radius: 5px;
-    display: block;
-    padding: 10px;
-    width: 200px;
-    background-color: rgb(243, 243, 243);
-    color: rgb(39, 111, 206);
-    user-select: none;
+#secondary-bar > div {
+    margin-left: 14px;
+    padding-bottom: 10px;
+}
+
+#secondary-bar > #regex-edit-options {
+    width: 50%;
+    margin: auto;
+}
+
+#regex-query-search-bar {
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    width: 85%;
+    background: linear-gradient(170deg, #747474, #bdbdbd);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 3px 10px;
+    outline: none;
+}
+
+#regex-query-search-bar::placeholder {  
+    color: #ffffffad;;
+}
+
+#regex-query-submit-btn {
+    border-radius: 100px;
+    border: none;
+    background-color: white;
+    box-shadow: 0px 0px 1px gray;
+    cursor: pointer;
 }
 
 .form-field-parent {
-    padding-top: 100px;
+    margin-top: 125px;
     display: flex;
 }
 
@@ -107,6 +130,17 @@ label {
     flex: 3;
     gap: 20px;
     padding: 50px;
+}
+
+label {
+    border: solid 1px black;
+    border-radius: 5px;
+    display: block;
+    padding: 10px;
+    width: 200px;
+    background-color: rgb(243, 243, 243);
+    color: rgb(39, 111, 206);
+    user-select: none;
 }
 
 #text-box {
