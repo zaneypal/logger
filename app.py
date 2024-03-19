@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, Markup, url_for
+from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from markupsafe import Markup
 from regex import multiregex, html_insert, patterns
