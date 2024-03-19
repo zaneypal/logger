@@ -16,7 +16,6 @@
 
 * {
     font-family: Pridi;
-    font-weight: 300;
 }
 
 body {
@@ -102,7 +101,7 @@ label {
 .form-field {
     flex: 3;
     gap: 20px;
-    padding: 100px;
+    padding: 50px;
 }
 
 #text-box {

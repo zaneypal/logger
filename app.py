@@ -91,11 +91,18 @@ def view_log(file, type:str):
 def query_log(file, pattern):
     type = file[file.find(".")+1:]
     abs_filepath = f"{filetype_paths[type]}/{file}"
+
     with open(abs_filepath, 'r', encoding='utf-8') as read_data:
         log = str(read_data.read())
         indexes = multiregex(pattern, log)
         result = html_insert(html_insert(log, indexes, "mark"), multiregex("\n", html_insert(log, indexes, "mark")), "br")
         result = Markup(result)
+
+    if request.method == 'POST':
+        if 'regex-query' in request.form:
+            pattern = request.form['regex-query']
+            return redirect(url_for('query_log', file=file, pattern=pattern))
+        
     return render_template('logger-query.html', result=result, pattern=f"'{pattern}'") 
 
 if __name__ == '__main__':
