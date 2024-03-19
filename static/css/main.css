@@ -54,11 +54,16 @@ h1 > a {
     border: none;
     background-color: #00000000;
     cursor: pointer;
-    transition: background-color 0.2s;
 }
 
 .top-bar-option:hover {
-    background-color: rgb(190, 207, 222);
+    background-color: #bedec9;
+    transition: background-color 0.2s;
+}
+
+.top-bar-option:active {
+    background-color: #bedec99b;
+    transition: background-color 0.1s;
 }
 
 /* Doesn't work right now
