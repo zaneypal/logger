@@ -64,12 +64,12 @@ h1 > a {
 }
 
 .top-bar-option:hover {
-    background-color: #a2f7d9;
+    background-color: #b0e4d8;
     transition: background-color 0.2s;
 }
 
 .top-bar-option:active:not(#option-regex) {
-    background-color: #a2f7d99b;
+    background-color: #b0e4d89b;
     transition: background-color 0.1s;
 }
 
@@ -154,12 +154,13 @@ h1 > a {
 }
 
 .upload-form {
-    padding: 40px 20px 20px 20px;
+    padding: 20px 20px 40px 20px;
     border-radius: 20px;
     border: dashed 3.5px #5ac8ff;
     outline: solid 4px white;
     background-color: white;
     display: block;
+    position: relative;
     overflow: hidden;
 }
 
@@ -173,20 +174,24 @@ h1 > a {
 }
 
 #loggerfile {
-    margin-bottom: 10px;
-    width: 200px;
-    display: block;
+    visibility: hidden;
 }
 
-#loggerfile + input {
+#upload-button {
     background-color: #87d9ff;
     color: #000000;
     padding: 5px;
     border: none;
     border-radius: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+    width: 50%;
+    margin: auto;
 }
 
-#loggerfile + input:hover {
+#upload-button:hover {
     background-color: #3bc1ff;
     color: white;
     transition: background-color 0.15s,
