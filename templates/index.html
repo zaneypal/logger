@@ -8,9 +8,13 @@
     <div class="form-field-parent">
         <div class="form-field" id="import-log-field">
             <h3>Import Logs</h3>
-            <form method="POST" enctype="multipart/form-data" class="upload">
+            <form method="POST" enctype="multipart/form-data" class="upload-form">
                 <input type="file" accept=".txt, .csv" id="loggerfile" name="loggerfile">
-                <input type="submit" value="Upload">
+                <input type="submit" value="Upload" id="upload-button" hidden>
+                <label for="upload-button">
+                    <img src="static/img/upload-icon.png" alt="Upload Button" id="upload-icon">
+                    <span>Upload File</span>
+                </label>
             </form>
 
             {%  if turnOn == True %}

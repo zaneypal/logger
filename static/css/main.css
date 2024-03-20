@@ -19,7 +19,7 @@
 }
 
 body {
-    background-color: #6cb36c;
+    background-color: #18a36e;
 }
 
 input[type="submit"] {
@@ -46,7 +46,7 @@ h1 > a {
 }
 
 #top-bar {
-    background-color: #ffffff;
+    background-color: #ffffffd0;
     height: fit-content;
     position: relative;
     overflow: hidden;
@@ -55,20 +55,21 @@ h1 > a {
 
 .top-bar-option {
     display: inline;
-    font-family: "Sarabun";
+    font-family: "Arial";
     padding: 5px 15px;
     border: none;
     background-color: #00000000;
     cursor: pointer;
+    letter-spacing: -0.35px;
 }
 
 .top-bar-option:hover {
-    background-color: #aae0b8;
+    background-color: #a2f7d9;
     transition: background-color 0.2s;
 }
 
-.top-bar-option:active {
-    background-color: #aae0b89b;
+.top-bar-option:active:not(#option-regex) {
+    background-color: #a2f7d99b;
     transition: background-color 0.1s;
 }
 
@@ -90,7 +91,7 @@ h1 > a {
 
 #secondary-bar {
     display: none;
-    background-color: #ffffff;
+    background-color: #ffffffd0;
 }
 
 #secondary-bar.active {
@@ -108,14 +109,14 @@ h1 > a {
 }
 
 #regex-query-search-bar {
-    font-family: Helvetica, sans-serif;
+    font-family: "Sarabun";
     font-weight: bold;
     width: 85%;
-    background: linear-gradient(175deg, #324dff, #00a2ff);
+    background: linear-gradient(175deg, #0a54ffc0, #00a2ff9d);
     border: none;
     border-radius: 20px;
     color: white;
-    padding: 3px 10px;
+    padding: 5px 10px;
     outline: none;
 }
 
@@ -152,21 +153,35 @@ h1 > a {
     flex: 2;
 }
 
-.upload {
-    padding: 20px;
+.upload-form {
+    padding: 40px 20px 20px 20px;
     border-radius: 20px;
-    outline: dashed 4px;
-    outline-color: rgb(90, 200, 255);
+    border: dashed 3.5px #5ac8ff;
+    outline: solid 4px white;
     background-color: white;
+    display: block;
+    overflow: hidden;
+}
+
+#upload-icon {
+    width: 20%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: auto;
 }
 
 #loggerfile {
     margin-bottom: 10px;
+    width: 200px;
+    display: block;
 }
 
 #loggerfile + input {
     background-color: #87d9ff;
     color: #000000;
+    padding: 5px;
     border: none;
     border-radius: 20px;
 }
@@ -185,14 +200,45 @@ h1 > a {
 }
 
 label {
-    border: solid 1px black;
+    border: solid 1px #276fce;
     border-radius: 5px;
+    padding: 40px 140px 40px 140px;
     display: block;
-    padding: 10px;
-    width: 200px;
-    background-color: rgb(243, 243, 243);
-    color: rgb(39, 111, 206);
     user-select: none;
+    cursor: pointer;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+label span {
+    font-family: "Sarabun";
+    text-transform: uppercase;
+    color: #276fce;
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+label:hover span {
+    color: #3bc1ff;
+    text-shadow: 0 0 1.2px #00ccff;
+    transition: color 0.12s,
+                text-shadow 0.12s;
+}
+
+label:hover {
+    border-color: #3b9aff;
+    box-shadow: 0 0 5px #3b9aff;
+    transition: border-color 0.12s,
+                box-shadow 0.12s;
+}
+
+textarea {
+    display: block;
+    margin-bottom: 10px;
 }
 
 #text-box {
