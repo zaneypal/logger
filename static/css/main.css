@@ -19,7 +19,7 @@
 }
 
 body {
-    background-color: #18a37e;
+    background-color: #f1fffb;
 }
 
 input[type="submit"] {
@@ -31,6 +31,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
+    user-select: none;
     overflow: hidden;
     background: linear-gradient(to right, #96ff76, #59ffca, #a8ff6a, #84ff84, #bdff6d, #96ffa6)
 }
@@ -50,7 +51,6 @@ h1 > a {
     height: fit-content;
     position: relative;
     overflow: hidden;
-    user-select: none;
 }
 
 .top-bar-option {
@@ -63,12 +63,12 @@ h1 > a {
 }
 
 .top-bar-option:hover {
-    background-color: #b0e4d8;
+    background-color: #bdf7cc;
     transition: background-color 0.2s;
 }
 
 .top-bar-option:active:not(#option-regex) {
-    background-color: #b0e4d89b;
+    background-color: #bdf7cc9b;
     transition: background-color 0.1s;
 }
 
@@ -111,7 +111,7 @@ h1 > a {
     font-family: "Sarabun";
     font-weight: bold;
     width: 85%;
-    background: linear-gradient(175deg, #0a54ffc0, #00a2ff9d);
+    background: linear-gradient(240deg, #67abff, #00a2ff9d);
     border: none;
     border-radius: 20px;
     color: white;
@@ -120,7 +120,7 @@ h1 > a {
 }
 
 #regex-query-search-bar::placeholder {  
-    color: #ffffffad;;
+    color: #ffffffad;
 }
 
 #regex-query-submit-btn {
@@ -156,7 +156,7 @@ h1 > a {
     padding: 20px 20px 40px 20px;
     border-radius: 20px;
     border: dashed 3.5px #5ac8ff;
-    outline: solid 4px white;
+    outline: solid 2px white;
     background-color: white;
     display: block;
     position: relative;
@@ -249,25 +249,51 @@ label:hover {
     padding: 50px;
 }
 
-textarea {
+#text-box {
     display: block;
     margin-bottom: 10px;
     border-radius: 4px;
+    resize: vertical;
+    outline: none;
+    border: none;
+    padding-left: 7px;
+    padding-top: 7px;
 }
 
-textarea + input {
+#text-box + input {
     background-color: #2072ef;
     color: #ffffff;
     padding: 5px 15px;
     border: none;
     border-radius: 20px;
+    transition: background-color 0.1s;
 }
 
-#text-box {
-    resize: vertical;
-    outline: none;
+#text-box + input:hover {
+    background-color: #246bd5;
+}
+
+#text-box + input:active {
+    background-color: #1f61c4;
+}
+
+#clear-recent {
     border: none;
-    padding-left: 5px;
+    background-color: #d2d2d2;
+    border-radius: 1px;
+    padding: 5px 15px;
+    transition: background-color 0.06s,
+                color 0.1s;
+}
+
+#clear-recent:hover {
+    background-color: #bbbbbb;
+    color: #d6d6d6;
+}
+
+#clear-recent:active {
+    background-color: #a5a5a5;
+    color: white;
 }
 
 .logs-view {
