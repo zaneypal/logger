@@ -55,12 +55,11 @@ h1 > a {
 
 .top-bar-option {
     display: inline;
-    font-family: "Arial";
+    font-family: "Roboto";
     padding: 5px 15px;
     border: none;
     background-color: #00000000;
     cursor: pointer;
-    letter-spacing: -0.35px;
 }
 
 .top-bar-option:hover {
@@ -164,44 +163,8 @@ h1 > a {
     overflow: hidden;
 }
 
-#upload-icon {
-    width: 20%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    margin: auto;
-}
-
 #loggerfile {
     visibility: hidden;
-}
-
-#upload-button {
-    background-color: #87d9ff;
-    color: #000000;
-    padding: 5px;
-    border: none;
-    border-radius: 20px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 5px;
-    width: 50%;
-    margin: auto;
-}
-
-#upload-button:hover {
-    background-color: #3bc1ff;
-    color: white;
-    transition: background-color 0.15s,
-                color 0.15s;
-}
-
-.form-field {
-    flex: 3;
-    gap: 20px;
-    padding: 50px;
 }
 
 label {
@@ -241,9 +204,63 @@ label:hover {
                 box-shadow 0.12s;
 }
 
+#upload-icon {
+    width: 20%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: auto;
+}
+
+#upload-button {
+    background-color: #87d9ff;
+    color: #ffffff9c;
+    padding: 5px;
+    border: none;
+    border-radius: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+    width: 50%;
+    margin: auto;
+}
+
+#upload-button.ready {
+    background-color: #3bc1ff;
+    color: white;
+    transition: background-color 0.15s,
+                color 0.15s;
+}
+
+#upload-button.ready:hover {
+    background-color: #2eabe5;
+}
+
+#upload-button.ready:active {
+    background-color: #2b9cd1;
+    transition: background-color 0.05s,
+}
+
+.form-field {
+    flex: 3;
+    gap: 20px;
+    padding: 50px;
+}
+
 textarea {
     display: block;
     margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+textarea + input {
+    background-color: #2072ef;
+    color: #ffffff;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 20px;
 }
 
 #text-box {

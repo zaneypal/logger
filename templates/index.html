@@ -12,9 +12,9 @@
                 <input type="file" accept=".txt, .csv" name="loggerfile" id="loggerfile" hidden>
                 <label for="loggerfile">
                     <img src="static/img/upload-icon.png" alt="Upload Button" id="upload-icon">
-                    <span>Upload File</span>
+                    <span id="selected-filename">Browse Files</span>
                 </label>
-                <input type="submit" value="Submit" id="upload-button">
+                <input type="submit" value="Upload" id="upload-button">
             </form>
 
             {%  if turnOn == True %}
