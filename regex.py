@@ -34,4 +34,3 @@ def html_insert(charlist, indexlist, tag):
             for ch in f"<{tag}>"[::-1]:
                 charlist.insert(start, ch)
     return "".join(charlist)
-
