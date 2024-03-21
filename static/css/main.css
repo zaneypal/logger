@@ -47,7 +47,7 @@ h1 > a {
 }
 
 #top-bar {
-    background-color: #ffffffd0;
+    background-color: #f1f1f1ea;
     height: fit-content;
     position: relative;
     overflow: hidden;
@@ -90,7 +90,7 @@ h1 > a {
 
 #secondary-bar {
     display: none;
-    background-color: #ffffffd0;
+    background-color: #f1f1f1ea;
 }
 
 #secondary-bar.active {
@@ -155,8 +155,7 @@ h1 > a {
 .upload-form {
     padding: 20px 20px 40px 20px;
     border-radius: 20px;
-    border: dashed 3.5px #5ac8ff;
-    outline: solid 2px white;
+    outline: dashed 3.5px #168aff;
     background-color: white;
     display: block;
     position: relative;
@@ -168,15 +167,15 @@ h1 > a {
 }
 
 label {
-    border: solid 1px #276fce;
     border-radius: 5px;
-    padding: 40px 140px 40px 140px;
+    outline: solid 2px #276fce00;
+    padding: 50px 160px;
+    width: max-content;
     display: block;
     user-select: none;
     cursor: pointer;
     margin: auto;
     position: relative;
-    overflow: hidden;
 }
 
 label span {
@@ -197,15 +196,8 @@ label:hover span {
                 text-shadow 0.12s;
 }
 
-label:hover {
-    border-color: #3b9aff;
-    box-shadow: 0 0 5px #3b9aff;
-    transition: border-color 0.12s,
-                box-shadow 0.12s;
-}
-
 #upload-icon {
-    width: 20%;
+    width: 30%;
     position: absolute;
     left: 0;
     right: 0;
@@ -230,16 +222,17 @@ label:hover {
 #upload-button.ready {
     background-color: #3bc1ff;
     color: white;
+    cursor: pointer;
     transition: background-color 0.15s,
                 color 0.15s;
 }
 
 #upload-button.ready:hover {
-    background-color: #2eabe5;
+    background-color: #58caff;
 }
 
 #upload-button.ready:active {
-    background-color: #2b9cd1;
+    background-color: #72d2ff;
     transition: background-color 0.05s,
 }
 
@@ -267,6 +260,7 @@ label:hover {
     border: none;
     border-radius: 20px;
     transition: background-color 0.1s;
+    cursor: pointer;
 }
 
 #text-box + input:hover {
