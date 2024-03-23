@@ -5,9 +5,9 @@ from regex import multiregex, html_insert, patterns
 import os, csv, re, json
 
 app = Flask(__name__)
-# Two lines below are not used in this phase but may need to be used later on.
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///txtfiles.db'
-#db = SQLAlchemy(app)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recentfiles.db'
+db = SQLAlchemy(app)
 
 # Stores the pathnames of the directories that hold user-uploaded files
 filetype_paths = {
@@ -91,16 +91,16 @@ def query_log(file, pattern):
     type = file[file.find(".")+1:]
     abs_filepath = f"{filetype_paths[type]}/{file}"
 
+    if request.method == 'POST':
+        if 'regex-query' in request.form:
+            pattern = request.form['regex-query']
+            return redirect(url_for('query_log', file=file, pattern=pattern))
+
     with open(abs_filepath, 'r', encoding='utf-8') as read_data:
         log = str(read_data.read())
         indexes = multiregex(pattern, log)
         result = html_insert(html_insert(log, indexes, "mark"), multiregex("\n", html_insert(log, indexes, "mark")), "br")
         result = Markup(result)
-
-    if request.method == 'POST':
-        if 'regex-query' in request.form:
-            pattern = request.form['regex-query']
-            return redirect(url_for('query_log', file=file, pattern=pattern))
         
     return render_template('logger-query.html', result=result, pattern=f"'{pattern}'") 
 
