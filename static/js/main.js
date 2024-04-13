@@ -13,4 +13,4 @@ loggerFile.addEventListener('change', function() {
     document.getElementById('upload-button').classList.add('ready');
 })
 
-console.log("Hi " + event.target.files[0].name);
+document.querySelectorAll('input[type=text], textarea').forEach(field => field.spellcheck = false);

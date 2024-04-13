@@ -20,9 +20,9 @@
             {%  if turnOn == True %}
                 <h3>Recent</h3>
                 {% for file in recent_files %}
-                <ul>
-                    <li>{{ file.name }}</li>
-                </ul>
+                <a class="recent-files" href="{{url_for('view_log', file=file.name[:-4], type=file.name[-3:])}}">
+                    <span>{{ file.name }}</span>
+                </a>
                 {% endfor %}
                 <form method="POST" enctype="multipart/form-data">
                     <input type="submit" name="clear-recent" id="clear-recent" value="Clear">
