@@ -11,7 +11,7 @@
             <th>Line</th>
             <th>Log Message</th>
         </tr>
-        {% for line in lines %}
+        {% for line in logs %}
         <tr>
             <td>{{ loop.index }}</td>
             <td class="log-field">{{ line }}</td>
@@ -20,4 +20,3 @@
     </table>
 </div>
 {% endblock %}
-
