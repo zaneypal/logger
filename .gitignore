@@ -1,2 +1,4 @@
 outcasts/notes.txt
 outcasts/test.py
+__pycache__/*.pyc
+*.db
