@@ -27,6 +27,10 @@ input[type="submit"] {
     cursor: pointer;
 }
 
+*::placeholder {
+    user-select: none;
+}
+
 header {
     position: fixed;
     top: 0;
@@ -281,14 +285,15 @@ label:hover span {
 }
 
 .recent-files:hover {
-    color: #ffffff;
+    color: #27874f;
 }
 
 .recent-files span {
     padding: 5px 2px;
     display: block;
+    font-family: "Libre Franklin";
     background-color: #f1fffb00;
-    transition: background-color 0.12s;
+    transition: background-color 0.05s;
     user-select: none;
 }
 
@@ -320,9 +325,21 @@ label:hover span {
     margin: 15% 5%;
 }
 
+.logs-view #line {
+    width: 100%;
+}
+
+th.line-number {
+    text-align: left;
+}
+
+.line-number {
+    width: 5%;
+}
+
 .log-field {
     border-radius: 3px;
-    padding: 20px;
+    padding: 14px;
     margin: 20px;
     background: linear-gradient(135deg,#fcfeff, #c1ffe0);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;

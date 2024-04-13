@@ -25,6 +25,23 @@ class recentFile(db.Model):
     content: Mapped[str] = mapped_column(nullable=False)
     upload_date: Mapped[str] = mapped_column(nullable=False)
 
+class loggerSession(db.Model):
+    line: Mapped[int] = mapped_column(primary_key=True)
+    hostname: Mapped[str]
+    username: Mapped[str]
+    ip_address: Mapped[str]
+    date: Mapped[str]
+    time: Mapped[str]
+    request: Mapped[str]
+    command: Mapped[str]
+    protocol: Mapped[str]
+    status_code: Mapped[str]
+    data_in: Mapped[str]
+    data_out: Mapped[str]
+    file_size: Mapped[str]
+    operating_system: Mapped[str]
+
+
 with app.app_context():
     db.create_all() 
 
@@ -63,7 +80,7 @@ def index():
     recent_files = None
     if db.session.query(recentFile).count() > 0:
         recent = True
-        recent_files = db.session.execute(db.select(recentFile)).scalars()
+        recent_files = db.session.execute(db.select(recentFile).order_by(recentFile.upload_date.desc())).scalars()
     return render_template('index.html', turnOn=recent, recent_files=recent_files)
 
 

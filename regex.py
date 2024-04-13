@@ -1,8 +1,19 @@
 import re
 
 patterns = {
-    'ip_address': re.compile(r"^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$"),
-    'hostname': re.compile(r"^(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?$") 
+    'hostname': re.compile(r"(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?"),
+    'username': re.compile(r""),
+    'ip_address': re.compile(r"(?:25[0-5]|(?:2[0-4]|1[0-9]|[1-9]|)[0-9]\.){3}(?:25[0-5]|(?:2[0-4]|1[0-9]|[1-9]|)[0-9])"),
+    'date': re.compile(r""),
+    'time': re.compile(r""),
+    'request': re.compile(r""),
+    'command': re.compile(r""),
+    'protocol': re.compile(r""),
+    'status_code': re.compile(r""),
+    'data_in': re.compile(r""),
+    'data_out': re.compile(r""),
+    'file_size': re.compile(r""),
+    'operating_system': re.compile(r"")
 }
 
 # Finds the index (character start and end positions) of all substrings matching the regex queried by user

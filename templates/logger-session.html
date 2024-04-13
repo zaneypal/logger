@@ -6,14 +6,22 @@
 
 {% block body %}
 <div class="logs-view">
-    <table>
+    <table id="auto-fields">
         <tr>
-            <th>Line</th>
+            <th>IP Address</th>
+            <th>Hostname</th>
+            <th>User</th>
+        </tr>
+    </table>
+
+    <table id="line">
+        <tr>
+            <th class="line-number">Line</th>
             <th>Log Message</th>
         </tr>
         {% for line in logs %}
         <tr>
-            <td>{{ loop.index }}</td>
+            <td class="line-number">{{ loop.index }}</td>
             <td class="log-field">{{ line }}</td>
         </tr>
         {% endfor %}

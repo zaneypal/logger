@@ -1,4 +1,3 @@
-outcasts/notes.txt
-outcasts/test.py
+outcasts/*
 *.pyc
 instance/*.db
