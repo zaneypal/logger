@@ -21,7 +21,7 @@
                 <h3>Recent</h3>
                 {% for file in recent_files %}
                 <ul>
-                    <li>{{ file }}</li>
+                    <li>{{ file.name }}</li>
                 </ul>
                 {% endfor %}
                 <form method="POST" enctype="multipart/form-data">

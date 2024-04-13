@@ -1,13 +1,28 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from markupsafe import Markup
 from regex import multiregex, html_insert, patterns
 import os, csv, re, json
 
+class Base(DeclarativeBase):
+    pass
+
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recentfiles.db'
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///logger.db'
+db = SQLAlchemy(model_class=Base)
+db.init_app(app)
+
+class recentFile(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(unique=True, nullable=False)
+    content: Mapped[str] = mapped_column(unique=True, nullable=False)
+
+with app.app_context():
+    db.create_all() 
+
+app.app_context().push()
 
 # Stores the pathnames of the directories that hold user-uploaded files
 filetype_paths = {
@@ -33,16 +48,26 @@ def index():
         if 'clear-recent' in request.form:
             with open("static/cache/recent.txt", 'w') as delete_data:
                 delete_data.close()
+
             for filetype in filetype_paths:
                 for file in os.listdir(filetype_paths[filetype]):
                     os.remove(os.path.join(filetype_paths[filetype], file))
+
+            recentFile.query.delete()
+            db.session.commit()
+
         else:
             # User can upload logs as a file with this code
             if 'loggerfile' in request.files:
                 file = request.files['loggerfile']
                 filename = file.filename
                 filetype = filename[filename.find(".")+1:]
+                abs_filepath = f"{filetype_paths[filetype]}/{filename}"
                 file.save(os.path.join(app.config[filetype], filename))
+                with open(abs_filepath, 'r', encoding='utf-8') as opened_file:
+                    data = opened_file.read()
+                    db.session.add(recentFile(name=filename, content=data))
+                    db.session.commit()
 
                 with open("static/cache/recent.txt", 'a+') as save_data:
                     save_data.write(filename+'\n')
@@ -57,18 +82,15 @@ def index():
             
             return redirect(url_for('view_log', file=filename[:filename.find(".")], type=filetype))
 
-    # Debug Needed    # # #
-    # Goal is to display names of recently uploaded files on homepage screen
-    # Use Flask SQLAlchemy
+    # Shows recently uploaded files
     recent = False
-    recent_files = ""
+    recent_files = None
     with open("static/cache/recent.txt", 'r+', encoding='utf-8') as read_data:
         if len(read_data.readlines()) > 0:
             recent = True
-            recent_files += str(read_data.read())
+            recent_files = db.session.execute(db.select(recentFile)).scalars()
 
     return render_template('index.html', turnOn=recent, recent_files=recent_files)
-    # Debug Needed    # # #
 
 # Lets user view uploaded file on page
 @app.route('/loggersession/<file>.<type>', methods=['GET', 'POST'])
