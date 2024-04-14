@@ -325,8 +325,28 @@ label:hover span {
     margin: 15% 5%;
 }
 
-.logs-view #line {
+#auto-fields {
+    border: solid 2px red;
+    border-radius: 12px;
     width: 100%;
+    text-align: left;
+    border-spacing: 10px 1px;
+    background-color: #ffffff;
+}
+
+#auto-fields th {
+    background-color: #fffdf5;
+    padding: 10px;
+}
+
+#auto-fields tr td {
+    border: solid 1px black;
+    padding: 10px;
+}
+
+#line {
+    width: 100%;
+    margin-top: 20px;
 }
 
 th.line-number {
@@ -347,7 +367,7 @@ th.line-number {
 
 table {
     border-collapse: separate;
-    border-spacing: 60px 20px;
+    border-spacing: 60px 1px;
 }
 
 mark {

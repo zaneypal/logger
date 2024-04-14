@@ -12,6 +12,13 @@
             <th>Hostname</th>
             <th>User</th>
         </tr>
+        {% for line in ip_field %}
+        <tr>
+            <td>{{ line }}</td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
     </table>
 
     <table id="line">

@@ -27,19 +27,19 @@ class recentFile(db.Model):
 
 class loggerSession(db.Model):
     line: Mapped[int] = mapped_column(primary_key=True)
-    hostname: Mapped[str]
-    username: Mapped[str]
-    ip_address: Mapped[str]
-    date: Mapped[str]
-    time: Mapped[str]
-    request: Mapped[str]
-    command: Mapped[str]
-    protocol: Mapped[str]
-    status_code: Mapped[str]
-    data_in: Mapped[str]
-    data_out: Mapped[str]
-    file_size: Mapped[str]
-    operating_system: Mapped[str]
+    hostname: Mapped[str] = mapped_column(nullable=True)
+    username: Mapped[str] = mapped_column(nullable=True)
+    ip_address: Mapped[str] = mapped_column(nullable=True)
+    date: Mapped[str] = mapped_column(nullable=True)
+    time: Mapped[str] = mapped_column(nullable=True)
+    request: Mapped[str] = mapped_column(nullable=True)
+    command: Mapped[str] = mapped_column(nullable=True)
+    protocol: Mapped[str] = mapped_column(nullable=True)
+    status_code: Mapped[str] = mapped_column(nullable=True)
+    data_in: Mapped[str] = mapped_column(nullable=True)
+    data_out: Mapped[str] = mapped_column(nullable=True)
+    file_size: Mapped[str] = mapped_column(nullable=True)
+    operating_system: Mapped[str] = mapped_column(nullable=True)
 
 
 with app.app_context():
@@ -92,9 +92,25 @@ def view_log(file, tag):
             pattern = request.form['regex-query']
             return redirect(url_for('query_log', file=file, tag=tag, pattern=pattern))
     else:
-        result_row = db.session.execute(db.select(recentFile).where(and_(recentFile.name == file, recentFile.upload_date == tag))).scalar()
-        logs = result_row.content.decode().split('\n')
-        return render_template('logger-session.html', logs=logs)
+        loggerSession.query.delete()
+        db.session.commit()
+        
+        logs_result = db.session.execute(db.select(recentFile).where(and_(recentFile.name == file, recentFile.upload_date == tag))).scalar()
+        logs = logs_result.content.decode().split('\n')
+
+        for line in logs:
+            if match:= re.search(patterns['ip_address'], line):
+                db.session.add(loggerSession(ip_address=match.group()))
+            else:
+                db.session.add(loggerSession())
+        db.session.commit()
+
+        ip_field = []
+        field_result = loggerSession.query.all()
+        for entry in field_result:
+            ip_field.append(entry.ip_address)
+
+        return render_template('logger-session.html', logs=logs, ip_field=ip_field)
 
 # Lets user find regex matches of uploaded log file
 @app.route('/loggerquery/<file>?tag=<tag>?query=<pattern>', methods=['GET', 'POST'])
