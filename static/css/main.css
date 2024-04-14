@@ -147,9 +147,7 @@ mark {
     line-height: 25px;
 }
 
-#auto-fields-button,
-#raw-log-button,
-#matches-only-button {
+#view-options button {
     background-color: #d0d0d0;
     color: #00000048;
     border: none;
@@ -167,6 +165,11 @@ mark {
 #matches-only-button.active {
     background-color: #4780fa;
     color: #ffffff;
+}
+
+#empty-lines-button.active {
+    background-color: #1eb65d;
+    color: white;
 }
 
 .secondary-bar#regex-edit-options {
@@ -391,7 +394,8 @@ label:hover span {
 
 #auto-fields.active,
 #raw-log.active,
-#matches-only.active {
+#matches-only.active,
+#empty-lines.active {
     display: table; 
 }
 
@@ -434,6 +438,10 @@ th.line-number {
 }
 
 #matches-only {
+    display: none;
+}
+
+#empty-lines {
     display: none;
 }
 

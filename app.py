@@ -124,8 +124,15 @@ def view_log(file, tag):
         header_data = []
         for data in temp:
             header_data.append(data.replace("_", " ").title())
+
+        no_empty_lines = []
+        for line in logs:
+            if line.isspace():
+                pass
+            else:
+                no_empty_lines.append(line)
         
-        return render_template('logger-session.html', logs=logs, headers=header_data, fields=field_data)
+        return render_template('logger-session.html', logs=logs, headers=header_data, fields=field_data, no_empty_lines=no_empty_lines)
 
 # Lets user find regex matches of uploaded log file
 @app.route('/loggerquery/<file>?tag=<tag>?query=<pattern>', methods=['GET', 'POST'])
@@ -148,8 +155,14 @@ def query_log(file, tag, pattern):
         for result in results:
             if re.search(r"<mark>.*</mark>", result):
                 matches_only.append(result)
+        no_empty_lines = []
+        for line in results:
+            if line.isspace():
+                pass
+            else:
+                no_empty_lines.append(line)
         
-    return render_template('logger-query.html', results=results, matches_only=matches_only, pattern=f"'{pattern}'") 
+    return render_template('logger-query.html', results=results, matches_only=matches_only, no_empty_lines=no_empty_lines, pattern=f"'{pattern}'") 
 
 if __name__ == '__main__':
     app.run(debug=True)
