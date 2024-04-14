@@ -32,6 +32,15 @@ function openSecondBar(option) {
 
 function toggleTable(elementID) {
     let tableOption = document.getElementById(elementID);
+
+    let tableSelector = document.querySelectorAll(".raw-log");
+    for (let x = 0; x < tableSelector.length; x++) {
+        if (tableSelector[x] === tableOption) {
+            continue
+        }
+        tableSelector[x].classList.remove("active");
+    }
+
     tableOption.classList.toggle("active");
 
     document.getElementById(elementID+'-button').classList.toggle("active");

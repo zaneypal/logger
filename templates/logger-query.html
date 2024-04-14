@@ -7,6 +7,29 @@
 {% block body %}
 <div class="logs-view">
     <h2>Search results for {{ pattern }}</h2>
-    <p class="log-field">{{ result }}</p>
+    <table id="raw-log" class="raw-log active">
+        <tr>
+            <th class="line-number">Line</th>
+            <th>Log Message</th>
+        </tr>
+        {% for result in results %}
+        <tr>
+            <td class="line-number">{{ loop.index }}</td>
+            <td class="log-field">{{ result }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <table id="matches-only" class="raw-log">
+        <tr>
+            <th class="line-number">Line</th>
+            <th>Log Message</th>
+        </tr>
+        {% for result in matches_only %}
+        <tr>
+            <td class="line-number">{{ loop.index }}</td>
+            <td class="log-field">{{ result }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 {% endblock %}

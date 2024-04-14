@@ -29,8 +29,9 @@ def format_date(date_str):
         if date != False:
             break
     if date == False:
-        date = None
-    return f"{date.year}-{date.month}-{date.day}"
+        return None
+    else:
+        return f"{date.year}-{date.month}-{date.day}"
 
 patterns = {
     'hostname': [1, re.compile(r"(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?")],

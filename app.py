@@ -139,10 +139,17 @@ def query_log(file, tag, pattern):
         result_row = db.session.execute(db.select(recentFile).where(and_(recentFile.name == file, recentFile.upload_date == tag))).scalar()
         log = result_row.content.decode()
         indexes = multiregex(pattern, log)
-        result = html_insert(html_insert(log, indexes, "mark"), multiregex("\n", html_insert(log, indexes, "mark")), "br")
-        result = Markup(result)
+        results = html_insert(html_insert(log, indexes, "mark"), multiregex("\n", html_insert(log, indexes, "mark")), "br")
+        results = Markup(results)
         
-    return render_template('logger-query.html', result=result, pattern=f"'{pattern}'") 
+        # Testing something out to see if I can get data to display line by line instead of in a clump
+        results = results.split("<br />")
+        matches_only = []
+        for result in results:
+            if re.search(r"<mark>.*</mark>", result):
+                matches_only.append(result)
+        
+    return render_template('logger-query.html', results=results, matches_only=matches_only, pattern=f"'{pattern}'") 
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -148,7 +148,8 @@ mark {
 }
 
 #auto-fields-button,
-#raw-log-button {
+#raw-log-button,
+#matches-only-button {
     background-color: #d0d0d0;
     color: #00000048;
     border: none;
@@ -162,7 +163,8 @@ mark {
     color: white;
 }
 
-#raw-log-button.active {
+#raw-log-button.active,
+#matches-only-button.active {
     background-color: #4780fa;
     color: #ffffff;
 }
@@ -383,8 +385,13 @@ label:hover span {
     margin: 15% 0;
 }
 
+.logs-view h2 {
+    margin-left: 60px;
+}
+
 #auto-fields.active,
-#raw-log.active {
+#raw-log.active,
+#matches-only.active {
     display: table; 
 }
 
@@ -424,6 +431,10 @@ th.line-number {
 
 .line-number {
     width: 5%;
+}
+
+#matches-only {
+    display: none;
 }
 
 .log-field {
