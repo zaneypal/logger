@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import and_, or_
 from markupsafe import Markup
-from regex import multiregex, html_insert, patterns
+from regex import multiregex, html_insert, patterns, format_date
 import os, csv, re, json, datetime
 
 def get_exact_datetime():
@@ -27,25 +27,15 @@ class recentFile(db.Model):
 
 class loggerSession(db.Model):
     line: Mapped[int] = mapped_column(primary_key=True)
-    hostname: Mapped[str] = mapped_column(nullable=True)
-    username: Mapped[str] = mapped_column(nullable=True)
-    ip_address: Mapped[str] = mapped_column(nullable=True)
-    date: Mapped[str] = mapped_column(nullable=True)
-    time: Mapped[str] = mapped_column(nullable=True)
-    request: Mapped[str] = mapped_column(nullable=True)
-    command: Mapped[str] = mapped_column(nullable=True)
-    protocol: Mapped[str] = mapped_column(nullable=True)
-    status_code: Mapped[str] = mapped_column(nullable=True)
-    data_in: Mapped[str] = mapped_column(nullable=True)
-    data_out: Mapped[str] = mapped_column(nullable=True)
-    file_size: Mapped[str] = mapped_column(nullable=True)
-    operating_system: Mapped[str] = mapped_column(nullable=True)
-
+    config: Mapped[bool]
+    data: Mapped[str]
 
 with app.app_context():
     db.create_all() 
 
 app.app_context().push()
+
+logger_config = "hostname,username,ip_address,date,time,request,command,protocol,status_code,data_in,data_out,file_size,operating_system"
 
 # Redirects user to homepage when visting the site
 @app.route('/', methods=['POST', 'GET'])
@@ -93,24 +83,42 @@ def view_log(file, tag):
             return redirect(url_for('query_log', file=file, tag=tag, pattern=pattern))
     else:
         loggerSession.query.delete()
+        db.session.add(loggerSession(config=True, data=logger_config))
         db.session.commit()
         
         logs_result = db.session.execute(db.select(recentFile).where(and_(recentFile.name == file, recentFile.upload_date == tag))).scalar()
         logs = logs_result.content.decode().split('\n')
 
+        logger_data = {}
+        logger_fields = logger_config.split(',')
+        for field in logger_fields:
+            logger_data[field] = ""
+
         for line in logs:
-            if match:= re.search(patterns['ip_address'], line):
-                db.session.add(loggerSession(ip_address=match.group()))
-            else:
-                db.session.add(loggerSession())
-        db.session.commit()
+            logger_data_str = ""
+            for field in logger_data.keys():
+                if match:= re.search(patterns[field][1], line):
+                    if patterns[field][0] == 1:
+                        logger_data[field]=match.group()
+                    elif patterns[field][0] == 2:    
+                        logger_data[field]=format_date(match.group())
+                if field == list(logger_data.keys())[-1]:
+                    logger_data_str += logger_data[field]
+                else:
+                    logger_data_str += f"{logger_data[field]},"
+            db.session.add(loggerSession(config=False, data=logger_data_str))     
+            db.session.commit()
 
-        ip_field = []
-        field_result = loggerSession.query.all()
+        table_data = []
+        field_data = []
+        field_result = loggerSession.query.filter(loggerSession.config == False).all()
+        
         for entry in field_result:
-            ip_field.append(entry.ip_address)
+            table_data.append(entry.data)
+        for data in table_data:
+            field_data.append(data.split(','))
 
-        return render_template('logger-session.html', logs=logs, ip_field=ip_field)
+        return render_template('logger-session.html', logs=logs, field_data=field_data)
 
 # Lets user find regex matches of uploaded log file
 @app.route('/loggerquery/<file>?tag=<tag>?query=<pattern>', methods=['GET', 'POST'])

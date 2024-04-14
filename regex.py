@@ -1,19 +1,51 @@
 import re
+from datetime import datetime
+
+def format_date(date_str):
+    formats = [
+        '%B %d, %Y',
+        '%m/%d/%Y',
+        '%m/%d/%y',
+        '%m.%d.%Y',
+        '%m.%d.%y',
+        '%m-%d-%Y',
+        '%m-%d-%y',
+        '%m%d%Y',
+        '%m%d%y',
+        '%Y/%m/%d',
+        '%y/%m/%d',
+        '%Y.%m.%d',
+        '%y.%m.%d',
+        '%Y-%m-%d',
+        '%y-%m-%d',
+        '%Y%m%d',
+        '%y%m%d',
+    ]
+    for format in formats:
+        try:
+            date = datetime.strptime(date_str, format)
+        except:
+            date = False
+        if date != False:
+            break
+    if date == False:
+        date = None
+    return date
 
 patterns = {
-    'hostname': re.compile(r"(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?"),
-    'username': re.compile(r""),
-    'ip_address': re.compile(r"(?:25[0-5]|(?:2[0-4]|1[0-9]|[1-9]|)[0-9]\.){3}(?:25[0-5]|(?:2[0-4]|1[0-9]|[1-9]|)[0-9])"),
-    'date': re.compile(r""),
-    'time': re.compile(r""),
-    'request': re.compile(r""),
-    'command': re.compile(r""),
-    'protocol': re.compile(r""),
-    'status_code': re.compile(r""),
-    'data_in': re.compile(r""),
-    'data_out': re.compile(r""),
-    'file_size': re.compile(r""),
-    'operating_system': re.compile(r"")
+    'hostname': [1, re.compile(r"(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?")],
+    'username': [1, re.compile(r"")],
+    'ip_address': [1, re.compile(r"(?:25[0-5]|(?:2[0-4]|1[0-9]|[1-9]|)[0-9]\.){3}(?:25[0-5]|(?:2[0-4]|1[0-9]|[1-9]|)[0-9])")],
+    'date': [2, re.compile(r"(?:[JFMASOND][a-z]{2,8} (?:(?:30|31)|[0-2]?[0-9]), \d{4})|(?:(?:\d{1,2}(?:\/|\.|-| |)){2}\d{2,4})")],
+    'time': [1, re.compile(r"")],
+    'request': [1, re.compile(r"")],
+    'command': [1, re.compile(r"")],
+    'protocol': [1, re.compile(r"")],
+    'status_code': [1, re.compile(r"")],
+    'data_in': [1, re.compile(r"")],
+    'data_out': [1, re.compile(r"")],
+    'file_size': [1, re.compile(r"")],
+    'operating_system': [1, re.compile(r"")]
 }
 
 # Finds the index (character start and end positions) of all substrings matching the regex queried by user
