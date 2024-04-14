@@ -30,6 +30,14 @@ function openSecondBar(option) {
     }
 }
 
+function toggleTable(elementID) {
+    let tableOption = document.getElementById(elementID);
+    tableOption.classList.toggle("active");
+
+    document.getElementById(elementID+'-button').classList.toggle("active");
+}
+
+// Upload button changes color when a file is selected
 const loggerFile = document.getElementById('loggerfile');
 const selectedFileName = document.getElementById('selected-filename')
 
@@ -38,4 +46,5 @@ loggerFile.addEventListener('change', function() {
     document.getElementById('upload-button').classList.add('ready');
 })
 
+// Removes red lines under misspelled words
 document.querySelectorAll('input[type=text], textarea').forEach(field => field.spellcheck = false);
