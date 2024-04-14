@@ -20,25 +20,39 @@
             <button class="top-bar-option" onclick="openSecondBar('format')">Format</button>
             <button class="top-bar-option" id="option-regex" onclick="openSecondBar('regex')">RegexEdit</button>
         </div>
+        
+        <div id="mask">
+            <div class="secondary-bar" id="file-options">
+                <button>New Logger Session</button>
+                <button>Open Existing Logger Session</button>
+                <button>Save</button>
+                <button>Save As</button>
+                <button>Settings</button>
+            </div>
 
-        <div class="secondary-bar" id="file-options">
+            <div class="secondary-bar" id="edit-options">
+                <button id="cut-button">Cut</button>
+                <button id="copy-button">Copy</button>
+                <button id="paste-button">Paste</button>
+            </div>
 
-        </div>
-        <div class="secondary-bar" id="edit-options">
+            <div class="secondary-bar" id="view-options">
+                <button id="auto-fields-button" onclick="toggleTable('auto-fields')">Auto-Fields Table</button>
+                <button id="raw-log-button" class="active" onclick="toggleTable('raw-log')">Raw Log</button>
+            </div>
 
-        </div>
-        <div class="secondary-bar" id="view-options">
-            <button id="auto-fields-button" onclick="toggleTable('auto-fields')">Auto-Fields Table</button>
-            <button id="raw-log-button" class="active" onclick="toggleTable('raw-log')">Raw Log</button>
-        </div>
-        <div class="secondary-bar" id="format-options">
+            <div class="secondary-bar" id="format-options">
+                <button>Configure Fields</button>
+                <button>Add Field</button>
+                <button>Change Delimiter</button>
+            </div>
 
-        </div>
-        <div class="secondary-bar" id="regex-edit-options">
-            <form method="POST" enctype="multipart/form-data">
-                <input type="text" placeholder="Search..." name="regex-query" id="regex-query-search-bar">
-                <input type="submit" id="regex-query-submit-btn" value="&#9906;">
-            </form>
+            <div class="secondary-bar" id="regex-edit-options">
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="text" placeholder="Search..." name="regex-query" id="regex-query-search-bar">
+                    <input type="submit" id="regex-query-submit-btn" value="&#9906;">
+                </form>
+            </div>
         </div>
     </header>
 

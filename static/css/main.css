@@ -51,6 +51,10 @@ h1 > a {
     color: #3c9448;
 }
 
+button {
+    cursor: pointer;
+}
+
 table {
     border-collapse: separate;
     border-spacing: 60px 1px;
@@ -62,15 +66,15 @@ mark {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+#top-bar,
+.secondary-bar {
+    background-color: #ffffff;
+}
+
 #top-bar {
     height: fit-content;
     position: relative;
     overflow: hidden;
-}
-
-#top-bar,
-.secondary-bar {
-    background-color: #ffffff;
 }
 
 .top-bar-option {
@@ -78,7 +82,6 @@ mark {
     padding: 5px 15px;
     border: none;
     background-color: #00000000;
-    cursor: pointer;
 }
 
 .top-bar-option:hover,
@@ -109,9 +112,9 @@ mark {
 .secondary-bar {
     display: none;
     width: 100%;
-    height: 38px;
-    max-height: 38px;
-    padding-bottom: 10px;
+    height: 40px;
+    max-height: 40px;
+    padding-left: 30px;
     border-top: solid 2px #4f6b4c;
 }
 
@@ -119,21 +122,37 @@ mark {
     display: block;
 }
 
+.secondary-bar button {
+    padding: 5px 15px;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+}
+
+.secondary-bar button:hover {
+    background-color: #d5d5d5;
+    transition: background-color 0.1s;
+}
+
+.secondary-bar button:active {
+    background-color: #aaaaaa;
+}
+
 .secondary-bar#view-options button {
-    margin-left: 30px;
-    margin-top: 10px;
     font-weight: bold;
+    margin-top: 10px;
+    align-items: center;
+    display: inline-flex;
+    height: 25px;
+    line-height: 25px;
 }
 
 #auto-fields-button,
 #raw-log-button {
     background-color: #d0d0d0;
-    padding: 4px 6px;
-    font-family: inherit;
     color: #00000048;
     border: none;
     border-radius: 8px;
-    cursor: pointer;
     transition: background-color 0.3s,
                 color 0.3s;
 }
@@ -144,8 +163,8 @@ mark {
 }
 
 #raw-log-button.active {
-    background-color: #ff9500;
-    color: black;
+    background-color: #4780fa;
+    color: #ffffff;
 }
 
 .secondary-bar#regex-edit-options {
