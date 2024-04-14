@@ -51,6 +51,17 @@ h1 > a {
     color: #3c9448;
 }
 
+table {
+    border-collapse: separate;
+    border-spacing: 60px 1px;
+}
+
+mark {
+    background-color: #4fdd8d;
+    color: #212121;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 #top-bar {
     height: fit-content;
     position: relative;
@@ -58,7 +69,7 @@ h1 > a {
 }
 
 #top-bar,
-#secondary-bar {
+.secondary-bar {
     background-color: #ffffff;
 }
 
@@ -96,28 +107,24 @@ h1 > a {
 }
 */
 
-#secondary-bar {
+.secondary-bar {
     display: none;
 }
 
-#secondary-bar.active {
+.secondary-bar.active {
     display: block;
-}
-
-#secondary-bar > div {
-    margin-left: 14px;
     padding-bottom: 10px;
 }
 
-#secondary-bar > #regex-edit-options {
-    width: 50%;
-    margin: auto;
+.secondary-bar#regex-edit-options {
+    text-align: center;
 }
 
 #regex-query-search-bar {
     font-family: "Sarabun";
     font-weight: bold;
-    width: 85%;
+    width: 50%;
+    margin: auto;
     background: linear-gradient(240deg, #8383832c, #83838336);
     border: solid 0.3px rgb(112, 112, 112);
     border-radius: 20px;
@@ -322,7 +329,7 @@ label:hover span {
 }
 
 .logs-view {
-    margin: 15% 5%;
+    margin: 15% 0;
 }
 
 #auto-fields {
@@ -332,6 +339,10 @@ label:hover span {
     text-align: left;
     border-spacing: 10px 1px;
     background-color: #e2e2e2;
+    overflow: auto;
+    white-space: nowrap;
+    margin: 10px 30px;
+    display: none;
 }
 
 #auto-fields th {
@@ -363,16 +374,5 @@ th.line-number {
     padding: 14px;
     margin: 20px;
     background: linear-gradient(135deg,#fcfeff, #c1ffe0);
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-table {
-    border-collapse: separate;
-    border-spacing: 60px 1px;
-}
-
-mark {
-    background-color: #4fdd8d;
-    color: #212121;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }

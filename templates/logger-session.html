@@ -8,35 +8,15 @@
 <div class="logs-view">
     <table id="auto-fields">
         <tr>
-            <th>Hostname</th>
-            <th>Username</th>
-            <th>IP Address</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Request</th>
-            <th>Command</th>
-            <th>Protocol</th>
-            <th>Status Code</th>
-            <th>Data In</th>
-            <th>Data Out</th>
-            <th>File Size</th>
-            <th>Operating System</th>
+        {% for header in headers %}
+            <th>{{ header }}</th>
+        {% endfor %}
         </tr>
-        {% for line in field_data %}
+        {% for field in fields %}
         <tr>
-            <td>{{ line[0] }}</td>
-            <td>{{ line[1] }}</td>
-            <td>{{ line[2] }}</td>
-            <td>{{ line[3] }}</td>
-            <td>{{ line[4] }}</td>
-            <td>{{ line[5] }}</td>
-            <td>{{ line[6] }}</td>
-            <td>{{ line[7] }}</td>
-            <td>{{ line[8] }}</td>
-            <td>{{ line[9] }}</td>
-            <td>{{ line[10] }}</td>
-            <td>{{ line[11] }}</td>
-            <td>{{ line[12] }}</td>        
+            {% for index in range(len(field)) %}
+            <td>{{ field[index] }}</td>
+            {% endfor %}      
         </tr>
         {% endfor %}
     </table>

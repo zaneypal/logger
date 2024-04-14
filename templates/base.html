@@ -14,20 +14,30 @@
     <header>
         <h1><a href="{{url_for('index')}}">Logger &#8212; Free Log Analyzer</a></h1>
         <div id="top-bar">
-            <button class="top-bar-option" onclick="openSecondBar()">File</button>
-            <button class="top-bar-option" onclick="openSecondBar()">Edit</button>
-            <button class="top-bar-option" onclick="openSecondBar()">View</button>
-            <button class="top-bar-option" onclick="openSecondBar()">Format</button>
-            <button class="top-bar-option" id="option-regex" onclick="openSecondBar()">RegexEdit</button>
+            <button class="top-bar-option" onclick="openSecondBar('file')">File</button>
+            <button class="top-bar-option" onclick="openSecondBar('edit')">Edit</button>
+            <button class="top-bar-option" onclick="openSecondBar('view')">View</button>
+            <button class="top-bar-option" onclick="openSecondBar('format')">Format</button>
+            <button class="top-bar-option" id="option-regex" onclick="openSecondBar('regex')">RegexEdit</button>
         </div>
 
-        <div id="secondary-bar">
-            <div id="regex-edit-options">
-                <form method="POST" enctype="multipart/form-data">
-                    <input type="text" placeholder="Search..." name="regex-query" id="regex-query-search-bar">
-                    <input type="submit" id="regex-query-submit-btn" value="&#9906;">
-                </form>
-            </div>
+        <div class="secondary-bar" id="file-options">
+            
+        </div>
+        <div class="secondary-bar" id="edit-options">
+            
+        </div>
+        <div class="secondary-bar" id="view-options">
+            
+        </div>
+        <div class="secondary-bar" id="format-options">
+            
+        </div>
+        <div class="secondary-bar" id="regex-edit-options">
+            <form method="POST" enctype="multipart/form-data">
+                <input type="text" placeholder="Search..." name="regex-query" id="regex-query-search-bar">
+                <input type="submit" id="regex-query-submit-btn" value="&#9906;">
+            </form>
         </div>
     </header>
 

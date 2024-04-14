@@ -14,7 +14,7 @@ class Base(DeclarativeBase):
     pass
 
 app = Flask(__name__)
-
+app.jinja_env.globals.update(len=len)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///logger.db'
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
@@ -73,7 +73,6 @@ def index():
         recent_files = db.session.execute(db.select(recentFile).order_by(recentFile.upload_date.desc())).scalars()
     return render_template('index.html', turnOn=recent, recent_files=recent_files)
 
-
 # Lets user view uploaded file on page
 @app.route('/loggersession/<file>?tag=<tag>', methods=['GET', 'POST'])
 def view_log(file, tag):
@@ -109,16 +108,24 @@ def view_log(file, tag):
             db.session.add(loggerSession(config=False, data=logger_data_str))     
             db.session.commit()
 
-        table_data = []
-        field_data = []
-        field_result = loggerSession.query.filter(loggerSession.config == False).all()
+        logger_result = loggerSession.query.filter(loggerSession.config == False).all()
+        header_result = loggerSession.query.filter(loggerSession.config == True).scalar()
         
-        for entry in field_result:
-            table_data.append(entry.data)
-        for data in table_data:
+        temp = []
+        field_data = []
+        for res in logger_result:
+            temp.append(res.data)
+        for data in temp:
             field_data.append(data.split(','))
 
-        return render_template('logger-session.html', logs=logs, field_data=field_data)
+        temp = str()
+        temp += header_result.data
+        temp = temp.split(",")
+        header_data = []
+        for data in temp:
+            header_data.append(data.replace("_", " ").title())
+        
+        return render_template('logger-session.html', logs=logs, headers=header_data, fields=field_data)
 
 # Lets user find regex matches of uploaded log file
 @app.route('/loggerquery/<file>?tag=<tag>?query=<pattern>', methods=['GET', 'POST'])

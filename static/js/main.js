@@ -1,7 +1,32 @@
-function openSecondBar() {
-    let secondBar = document.getElementById("secondary-bar");
-    if ( !secondBar.classList.contains("active") ) {
-        secondBar.classList.toggle("active");
+function openSecondBar(option) {
+    let secondBar = document.querySelectorAll(".secondary-bar");
+    let mode = '';
+
+    if (option === 'file') {
+        mode = "file-options";
+    } else if (option === 'edit') {
+        mode = "edit-options";
+    } else if (option === 'view') {
+        mode = "view-options";
+    } else if (option === 'format') {
+        mode = "format-options";
+    } else if (option === 'regex') {
+        mode = "regex-edit-options";
+    }
+
+    let optionPanel = document.getElementById(mode);
+
+    if (optionPanel.classList.contains("active")) {
+        optionPanel.classList.remove("active");
+    } else {
+        optionPanel.classList.add("active");
+    }
+
+    for (let x = 0; x < secondBar.length; x++) {
+        if (secondBar[x] === optionPanel) {
+            continue;
+        }
+        secondBar[x].classList.remove("active");
     }
 }
 
