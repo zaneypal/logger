@@ -46,6 +46,14 @@ function toggleTable(elementID) {
     document.getElementById(elementID+'-button').classList.toggle("active");
 }
 
+function activateButton() {
+    if (document.getElementById("paste-logs-field").value === "") {
+        document.getElementById("submit-btn").classList.remove("ready")
+    } else {
+        document.getElementById("submit-btn").classList.add("ready")
+    }
+}
+
 // Upload button changes color when a file is selected
 const loggerFile = document.getElementById('loggerfile');
 const selectedFileName = document.getElementById('selected-filename')

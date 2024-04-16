@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
+<style>
+#option-regex {
+    display: inline;       
+}
+</style>
 {% endblock %}
 
 {% block body %}
 <div class="logs-view">
-    <h2>Search results for {{ pattern }}</h2>
+    <h2>Search results for {{ pattern }} :</h2>
     <table id="raw-log" class="raw-log active">
         <tr>
             <th class="line-number">Line</th>

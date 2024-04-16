@@ -162,7 +162,11 @@ def query_log(file, tag, pattern):
             else:
                 no_empty_lines.append(line)
         
-    return render_template('logger-query.html', results=results, matches_only=matches_only, no_empty_lines=no_empty_lines, pattern=f"'{pattern}'") 
+    return render_template('logger-query.html', results=results, matches_only=matches_only, no_empty_lines=no_empty_lines, pattern=f"'{pattern}'")
+
+@app.route('/test')
+def test():
+    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

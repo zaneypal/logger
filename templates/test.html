@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+<input id="aladdin" type="text" oninput="myFunction()">
+<button id="magic-btn">Magic Button</button>
+
+<script>
+    function myFunction() {
+        document.getElementById("magic-btn").innerText = document.getElementById("aladdin").value;
+
+        if (document.getElementById("magic-btn").innerHTML === '') {
+            document.getElementById("magic-btn").innerHTML = "Magic Button";
+        }
+    }
+</script>
+{% endblock %}
+

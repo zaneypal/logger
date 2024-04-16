@@ -20,6 +20,7 @@
 
 body {
     background-color: #f1fffb;
+    padding-top: 120px;
 }
 
 input[type="submit"] {
@@ -96,6 +97,7 @@ mark {
 
 #option-regex {
     font-weight: 500;
+    display: none;
 }
 
 #option-regex:hover {
@@ -212,7 +214,6 @@ mark {
 }
 
 .form-field-parent {
-    margin-top: 125px;
     display: flex;
 }
 
@@ -286,6 +287,7 @@ label:hover span {
     right: 0;
     bottom: 5px;
     width: 50%;
+    pointer-events: none;
     margin: auto;
     cursor: default;
 }
@@ -294,6 +296,7 @@ label:hover span {
     background-color: #3bc1ff;
     color: white;
     cursor: pointer;
+    pointer-events: all;
     transition: background-color 0.15s,
                 color 0.15s;
 }
@@ -313,7 +316,7 @@ label:hover span {
     padding: 50px;
 }
 
-#text-box {
+#paste-logs-field {
     display: block;
     margin-bottom: 10px;
     border-radius: 4px;
@@ -324,20 +327,28 @@ label:hover span {
     padding-top: 7px;
 }
 
-#text-box + input {
-    background-color: #2072ef;
-    color: #ffffff;
+#submit-btn {
+    background-color: #95979bb7;
+    color: #666666;
     padding: 5px 15px;
     border: none;
     border-radius: 20px;
-    transition: background-color 0.1s;
+    transition: background-color 0.1s,
+                color 0.1s;
+    pointer-events: none;
 }
 
-#text-box + input:hover {
+#submit-btn.ready {
+    background-color: #2072ef;
+    color: #ffffff;
+    pointer-events: all;
+}
+
+#submit-btn:hover {
     background-color: #246bd5;
 }
 
-#text-box + input:active {
+#submit-btn:active {
     background-color: #1f61c4;
 }
 
@@ -385,7 +396,7 @@ label:hover span {
 }
 
 .logs-view {
-    margin: 15% 0;
+    margin: 5% 0;
 }
 
 .logs-view h2 {
