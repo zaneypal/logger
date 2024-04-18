@@ -1,4 +1,4 @@
-from flask import Flask, session, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import and_, or_
@@ -14,7 +14,6 @@ class Base(DeclarativeBase):
     pass
 
 app = Flask(__name__)
-app.secret_key = 'defsdf'
 app.jinja_env.globals.update(len=len)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///logger.db'
 db = SQLAlchemy(model_class=Base)
@@ -62,10 +61,9 @@ def index():
             current_datetime = get_exact_datetime()
             db.session.add(recentFile(name=filename, content=data, upload_date=current_datetime))
             db.session.commit()
-            session['tag'] = db.session.execute(db.select(recentFile.id).where(recentFile.upload_date == current_datetime)).scalar()
-            session['current_datetime'] = get_exact_datetime()
+            tag = db.session.execute(db.select(recentFile.upload_date).where(recentFile.upload_date == current_datetime)).scalar()
 
-            return redirect(url_for('view_log'))
+            return redirect(url_for('view_log', file=filename, tag=tag))
 
     # Shows recently uploaded files
     recent = False
@@ -76,21 +74,18 @@ def index():
     return render_template('index.html', turnOn=recent, recent_files=recent_files)
 
 # Lets user view uploaded file on page
-@app.route('/loggersession', methods=['GET', 'POST'])
-def view_log():
+@app.route('/loggersession/<file>?tag=<tag>', methods=['GET', 'POST'])
+def view_log(file, tag):
     if request.method == 'POST':
         if 'regex-query' in request.form:
-            current_datetime = session.get('current_datetime', None)
-            session['tag'] = db.session.execute(db.select(recentFile.id).where(recentFile.upload_date == current_datetime)).scalar()
-            session['pattern'] = request.form['regex-query']
-            return redirect(url_for('query_log'))
+            pattern = request.form['regex-query']
+            return redirect(url_for('query_log', file=file, tag=tag, pattern=pattern))
     else:
         loggerSession.query.delete()
         db.session.add(loggerSession(config=True, data=logger_config))
         db.session.commit()
         
-        tag = session.get('tag', None)
-        logs_result = db.session.execute(db.select(recentFile).where(recentFile.id == tag)).scalar()
+        logs_result = db.session.execute(db.select(recentFile).where(and_(recentFile.name == file, recentFile.upload_date == tag))).scalar()
         logs = logs_result.content.decode().split('\n')
 
         logger_data = {}
@@ -140,22 +135,19 @@ def view_log():
         return render_template('logger-session.html', logs=logs, headers=header_data, fields=field_data, no_empty_lines=no_empty_lines)
 
 # Lets user find regex matches of uploaded log file
-@app.route('/loggerquery', methods=['GET', 'POST'])
-def query_log():
-    tag = session.get('tag', None)
+@app.route('/loggerquery/<file>?tag=<tag>?query=<pattern>', methods=['GET', 'POST'])
+def query_log(file, tag, pattern):
     if request.method == 'POST':
         if 'regex-query' in request.form:
             pattern = request.form['regex-query']
-            return redirect(url_for('query_log', tag=tag, pattern=pattern))
+            return redirect(url_for('query_log', file=file, tag=tag, pattern=pattern))
 
     else:
-        pattern = session.get('pattern', None)
-        result_row = db.session.execute(db.select(recentFile).where(recentFile.id == tag)).scalar()
+        result_row = db.session.execute(db.select(recentFile).where(and_(recentFile.name == file, recentFile.upload_date == tag))).scalar()
         log = result_row.content.decode()
         indexes = multiregex(pattern, log)
         results = html_insert(html_insert(log, indexes, "mark"), multiregex("\n", html_insert(log, indexes, "mark")), "br")
         results = Markup(results)
-        results2 = Markup(results)
         
         # Testing something out to see if I can get data to display line by line instead of in a clump
         results = results.split("<br />")
@@ -170,7 +162,6 @@ def query_log():
             else:
                 no_empty_lines.append(line)
         
-        query = request.args.get("regex-query")
     return render_template('logger-query.html', results=results, matches_only=matches_only, no_empty_lines=no_empty_lines, pattern=f"'{pattern}'")
 
 @app.route('/test')
