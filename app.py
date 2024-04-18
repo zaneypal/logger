@@ -1,4 +1,5 @@
-from flask import Flask, session, redirect, render_template, request, url_for
+from logging import FileHandler, WARNING
+from flask import Flask, session, redirect, render_template, request, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import and_, or_
@@ -14,6 +15,8 @@ class Base(DeclarativeBase):
     pass
 
 app = Flask(__name__)
+file_handler = FileHandler('errors.txt')
+file_handler.setLevel(WARNING)
 app.secret_key = 'defsdf'
 app.jinja_env.globals.update(len=len)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///logger.db'
@@ -51,13 +54,26 @@ def index():
             # User can upload logs as a file with this code
             if 'loggerfile' in request.files:
                 file = request.files['loggerfile']
-                filename = file.filename
                 data = file.read()
+                filename = file.filename
+                count = 0
+                for entry in recentFile.query.all():
+                    if entry.name.startswith(filename):
+                        count += 1
+                if count > 0:
+                    filename = f'{filename} ({count})'
 
             # Allows user to also upload logs by pasting text
             else:
                 data = request.form['log-text-field'].encode()
-                filename = 'Pasted Log'
+                count = 0
+                for entry in recentFile.query.all():
+                    if entry.name.startswith("Pasted Log"):
+                        count += 1
+                if count > 0:
+                    filename = f'Pasted Log ({count}).txt'
+                else:
+                    filename = 'Pasted Log.txt'
             
             current_datetime = get_exact_datetime()
             db.session.add(recentFile(name=filename, content=data, upload_date=current_datetime))
@@ -65,7 +81,7 @@ def index():
             session['tag'] = db.session.execute(db.select(recentFile.id).where(recentFile.upload_date == current_datetime)).scalar()
             session['current_datetime'] = get_exact_datetime()
 
-            return redirect(url_for('view_log'))
+            return redirect(url_for('view_log', file=filename))
 
     # Shows recently uploaded files
     recent = False
@@ -76,8 +92,9 @@ def index():
     return render_template('index.html', turnOn=recent, recent_files=recent_files)
 
 # Lets user view uploaded file on page
-@app.route('/loggersession', methods=['GET', 'POST'])
-def view_log():
+@app.route('/loggersession/<file>', methods=['GET', 'POST'])
+def view_log(file):
+
     if request.method == 'POST':
         if 'regex-query' in request.form:
             current_datetime = session.get('current_datetime', None)
@@ -90,7 +107,7 @@ def view_log():
         db.session.commit()
         
         tag = session.get('tag', None)
-        logs_result = db.session.execute(db.select(recentFile).where(recentFile.id == tag)).scalar()
+        logs_result = db.session.execute(db.select(recentFile).where(recentFile.name == file)).scalar()
         logs = logs_result.content.decode().split('\n')
 
         logger_data = {}
@@ -137,11 +154,11 @@ def view_log():
             else:
                 no_empty_lines.append(line)
         
-        return render_template('logger-session.html', logs=logs, headers=header_data, fields=field_data, no_empty_lines=no_empty_lines)
+        return render_template('logger-session.html', file=file, logs=logs, headers=header_data, fields=field_data, no_empty_lines=no_empty_lines)
 
 # Lets user find regex matches of uploaded log file
-@app.route('/loggerquery', methods=['GET', 'POST'])
-def query_log():
+@app.route('/loggerquery/<file>', methods=['GET', 'POST'])
+def query_log(file):
     tag = session.get('tag', None)
     if request.method == 'POST':
         if 'regex-query' in request.form:
@@ -150,7 +167,7 @@ def query_log():
 
     else:
         pattern = session.get('pattern', None)
-        result_row = db.session.execute(db.select(recentFile).where(recentFile.id == tag)).scalar()
+        result_row = db.session.execute(db.select(recentFile).where(recentFile.name == file)).scalar()
         log = result_row.content.decode()
         indexes = multiregex(pattern, log)
         results = html_insert(html_insert(log, indexes, "mark"), multiregex("\n", html_insert(log, indexes, "mark")), "br")
@@ -169,13 +186,33 @@ def query_log():
                 pass
             else:
                 no_empty_lines.append(line)
-        
-        query = request.args.get("regex-query")
-    return render_template('logger-query.html', results=results, matches_only=matches_only, no_empty_lines=no_empty_lines, pattern=f"'{pattern}'")
+    
+    return render_template('logger-query.html', tag=tag, results=results, matches_only=matches_only, no_empty_lines=no_empty_lines, pattern=f"'{pattern}'")
 
-@app.route('/test')
-def test():
-    return render_template('test.html')
+@app.route('/test/<file>', methods=['GET', 'POST'])
+def test(file):
+    tag = session.get('tag', None)
+    pattern = session.get('pattern', None)
+    result_row = db.session.execute(db.select(recentFile).where(recentFile.name == file)).scalar()
+    log = result_row.content.decode()
+    indexes = multiregex(pattern, log)
+    results = html_insert(html_insert(log, indexes, "mark"), multiregex("\n", html_insert(log, indexes, "mark")), "br")
+
+    results = jsonify({'results': results})
+    return results
+    
+    # Testing something out to see if I can get data to display line by line instead of in a clump
+    results = results.split("<br />")
+    matches_only = []
+    for result in results:
+        if re.search(r"<mark>.*</mark>", result):
+            matches_only.append(result)
+    no_empty_lines = []
+    for line in results:
+        if line.isspace():
+            pass
+        else:
+            no_empty_lines.append(line)
 
 if __name__ == '__main__':
     app.run(debug=True)

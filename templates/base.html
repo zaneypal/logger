@@ -19,7 +19,6 @@
             <button class="top-bar-option" onclick="openSecondBar('view')">View</button>
             <button class="top-bar-option" onclick="openSecondBar('format')">Format</button>
             <button class="top-bar-option" id="option-regex" onclick="openSecondBar('regex')">RegEx Search</button>
-            <button class="top-bar-option"><a href="{{ url_for('test') }}">DevTools</a></button>
         </div>
         
         <div class="secondary-bar" id="file-options">
@@ -51,7 +50,7 @@
 
         <div class="secondary-bar" id="regex-edit-options">
             <form method="POST" enctype="multipart/form-data">
-                <input type="text" placeholder="Search with RegEx..." name="regex-query" id="regex-query-search-bar">
+                <input type="text" placeholder="Search with RegEx..." name="regex-query" id="regex-query-search-bar" oninput="regexSearch()">
                 <input type="submit" id="regex-query-submit-btn" value="&#9906;">
             </form>
         </div>
@@ -59,5 +58,6 @@
 
     {% block body %}{% endblock %}
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/regex.js') }}"></script>
 </body>
 </html>

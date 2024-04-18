@@ -20,7 +20,7 @@
             {%  if turnOn == True %}
                 <h3>Recent</h3>
                 {% for file in recent_files %}
-                <a class="recent-files" href="{{ url_for('view_log', tag=file.id) }}">
+                <a class="recent-files" href="{{ url_for('view_log', file=file.name) }}">
                     <span>{{ file.name }}</span>
                 </a>
                 {% endfor %}
