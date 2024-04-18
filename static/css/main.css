@@ -411,12 +411,12 @@ label:hover span {
 }
 
 #auto-fields {
-    border: solid 2px red;
+    border: solid 2px rgb(101, 64, 0);
     border-radius: 12px;
     width: 100%;
     text-align: left;
     border-spacing: 10px 1px;
-    background-color: #e2e2e2;
+    background-color: #8f5a0b;
     overflow: auto;
     white-space: nowrap;
     margin: 10px 30px;
@@ -424,7 +424,7 @@ label:hover span {
 }
 
 #auto-fields th {
-    background-color: #fffdf5;
+    background-color: #d0ad7a;
     padding: 10px;
 }
 
