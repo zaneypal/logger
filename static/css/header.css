@@ -1,0 +1,146 @@
+#top-bar,
+.secondary-bar {
+    background-color: #ffffff;
+}
+
+#top-bar {
+    height: fit-content;
+    position: relative;
+    overflow: hidden;
+}
+
+.top-bar-option {
+    display: inline;
+    padding: 5px 15px;
+    border: none;
+    font-weight: 500;
+    background-color: #00000000;
+}
+
+.top-bar-option:hover,
+.top-bar-option:active:not(#option-regex) {
+    background-color: #c1eacc;
+    transition: background-color 0.15s;
+}
+
+.top-bar-option:active:not(#option-regex) {
+    opacity: 0.7;
+}
+
+#option-regex {
+    font-weight: 500;
+    display: none;
+}
+
+#option-regex:hover {
+    background: linear-gradient(to right,#0937ab,#82ecff);
+    color: white;
+}
+
+/* Doesn't work right now
+.top-bar-option:active > #secondary-bar {
+    animation: slideDown 1s;
+}
+*/
+
+.secondary-bar {
+    display: none;
+    width: 100%;
+    height: 40px;
+    max-height: 40px;
+    padding-left: 30px;
+    border-top: solid 2px #4f6b4c;
+}
+
+.secondary-bar.active {
+    display: block;
+}
+
+.secondary-bar button {
+    padding: 5px 15px;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+}
+
+.secondary-bar button:hover {
+    background-color: #d5d5d5;
+    transition: background-color 0.1s;
+}
+
+.secondary-bar button:active {
+    background-color: #aaaaaa;
+}
+
+.secondary-bar#view-options button {
+    font-weight: bold;
+    margin-top: 10px;
+    align-items: center;
+    display: inline-flex;
+    height: 25px;
+    line-height: 25px;
+}
+
+#view-options button {
+    background-color: #d0d0d0;
+    color: #00000048;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s,
+                color 0.3s;
+}
+
+#auto-fields-button.active {
+    background-color: #e4433a;
+    color: white;
+}
+
+#raw-log-button.active,
+#matches-only-button.active {
+    background-color: #4780fa;
+    color: #ffffff;
+}
+
+#empty-lines-button.active {
+    background-color: #1eb65d;
+    color: white;
+}
+
+.secondary-bar#regex-edit-options {
+    text-align: center;
+}
+
+#regex-query-search-bar {
+    font-family: "Sarabun";
+    font-weight: bold;
+    width: 50%;
+    margin: auto;
+    background: linear-gradient(240deg, #8383832c, #83838336);
+    border: solid 0.3px rgb(112, 112, 112);
+    border-radius: 20px;
+    color: #000000;
+    padding: 5px 10px;
+    outline: none;
+}
+
+#regex-query-search-bar::placeholder {  
+    color: #4d4d4dad;
+}
+
+#regex-query-submit-btn {
+    border-radius: 100px;
+    border: none;
+    background-color: #00000000;
+    padding-left: 14px;
+    font-size: 24px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+}
+
+#regex-query-submit-btn:hover {
+    color: #2162cb;
+    text-shadow: 1px 0 10px #00d0ff;
+    transition: color 0.2s,
+                text-shadow 0.2s;
+}

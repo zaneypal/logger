@@ -1,0 +1,36 @@
+.panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 2;
+    text-align: center;
+    padding: 5px;
+    width: 500px;
+    height: 300px;
+    border: solid 1px black;
+    box-shadow: 0.5px 0.5px 2px black;
+    background-color: white;
+    overflow: hidden;
+    display: none;
+}
+
+#editor-body {
+    background-color: blue;
+    width: 90%;
+    height: 80%;
+    margin: auto;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+#editor-body input {
+    display: block;
+    margin-top: 10px;
+}
+
+#add-field-interface {
+    display: none;
+}

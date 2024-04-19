@@ -1,0 +1,68 @@
+.logs-view {
+    margin: 5% 0;
+}
+
+.logs-view h2 {
+    margin-left: 60px;
+}
+
+#auto-fields.active,
+#raw-log.active,
+#matches-only.active,
+#empty-lines.active {
+    display: table; 
+}
+
+#auto-fields {
+    border: solid 2px rgb(101, 64, 0);
+    border-radius: 12px;
+    width: 100%;
+    text-align: left;
+    border-spacing: 10px 1px;
+    background-color: #8f5a0b;
+    overflow: auto;
+    white-space: nowrap;
+    margin: 10px 30px;
+    display: none;
+}
+
+#auto-fields th {
+    background-color: #d0ad7a;
+    padding: 10px;
+}
+
+#auto-fields tr td {
+    border: solid 1px black;
+    background-color: white;
+    padding: 10px;
+}
+
+#raw-log {
+    width: 100%;
+    margin-top: 20px;
+    display: none;
+}
+
+th.line-number {
+    text-align: left;
+}
+
+.line-number {
+    width: 5%;
+}
+
+#matches-only {
+    display: none;
+}
+
+#empty-lines {
+    display: none;
+}
+
+.log-field {
+    border-radius: 3px;
+    padding: 14px;
+    margin: 20px;
+    background: linear-gradient(135deg,#fcfeff, #c1ffe0);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

@@ -1,0 +1,181 @@
+.form-field-parent {
+    display: flex;
+}
+
+#import-log-field {
+    margin-top: 10px;
+    margin-left: 50px;
+    flex: 2;
+}
+
+.upload-form {
+    padding: 20px 20px 40px 20px;
+    border-radius: 20px;
+    outline: dashed 3.5px #168aff;
+    background-color: white;
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+#loggerfile {
+    visibility: hidden;
+}
+
+label {
+    border-radius: 5px;
+    outline: solid 2px #276fce00;
+    padding: 50px 160px;
+    width: max-content;
+    display: block;
+    user-select: none;
+    cursor: pointer;
+    margin: auto;
+    position: relative;
+}
+
+label span {
+    font-family: "Sarabun";
+    text-transform: uppercase;
+    color: #276fce;
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+label:hover span {
+    color: #3bc1ff;
+    text-shadow: 0 0 1.2px #00ccff;
+    transition: color 0.12s,
+                text-shadow 0.12s;
+}
+
+#upload-icon {
+    width: 30%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: auto;
+}
+
+#upload-button {
+    background-color: #87d9ff;
+    color: #ffffff9c;
+    padding: 5px;
+    border: none;
+    border-radius: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+    width: 50%;
+    pointer-events: none;
+    margin: auto;
+    cursor: default;
+}
+
+#upload-button.ready {
+    background-color: #3bc1ff;
+    color: white;
+    cursor: pointer;
+    pointer-events: all;
+    transition: background-color 0.15s,
+                color 0.15s;
+}
+
+#upload-button.ready:hover {
+    background-color: #58caff;
+}
+
+#upload-button.ready:active {
+    background-color: #72d2ff;
+    transition: background-color 0.05s,
+}
+
+.form-field {
+    flex: 3;
+    gap: 20px;
+    padding: 50px;
+}
+
+#paste-logs-field {
+    display: block;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    resize: vertical;
+    outline: none;
+    border: none;
+    padding-left: 7px;
+    padding-top: 7px;
+}
+
+#submit-btn {
+    background-color: #95979bb7;
+    color: #666666;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 20px;
+    transition: background-color 0.1s,
+                color 0.1s;
+    pointer-events: none;
+}
+
+#submit-btn.ready {
+    background-color: #2072ef;
+    color: #ffffff;
+    pointer-events: all;
+}
+
+#submit-btn:hover {
+    background-color: #246bd5;
+}
+
+#submit-btn:active {
+    background-color: #1f61c4;
+}
+
+.recent-files {
+    text-decoration: none;
+    color: #000000;
+    transition: color 0.1s;
+}
+
+.recent-files:hover {
+    color: #27874f;
+}
+
+.recent-files span {
+    padding: 5px 2px;
+    display: block;
+    font-family: "Libre Franklin";
+    background-color: #f1fffb00;
+    transition: background-color 0.05s;
+    user-select: none;
+}
+
+.recent-files span:hover {
+    background-color: #cadfd999;
+}
+
+#clear-recent {
+    border: none;
+    background-color: #d2d2d2;
+    border-radius: 1px;
+    margin-top: 20px;
+    padding: 5px 15px;
+    transition: background-color 0.06s,
+                color 0.1s;
+}
+
+#clear-recent:hover {
+    background-color: #a5a5a5;
+    color: white;
+}
+
+#clear-recent:active {
+    background-color: #bbbbbb;
+    color: #d6d6d6;
+}

@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/logger-session.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/popup-panels.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Wix+Madefor+Display:wght@400..800&family=Libre+Franklin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
@@ -11,6 +15,8 @@
     {% block head %}{% endblock %}
 </head>
 <body>
+    <div id="overlay"></div>
+
     <header>
         <h1><a href="{{url_for('index')}}">Logger &#8212; Free Log Analyzer</a></h1>
         <div id="top-bar">
@@ -44,7 +50,7 @@
         </div>
 
         <div class="secondary-bar" id="format-options">
-            <button>Configure Fields</button>
+            <button onclick="openPanel('fields-editor')">Configure Fields</button>
             <button>Add Field</button>
             <button>Change Delimiter</button>
         </div>
@@ -57,7 +63,32 @@
         </div>
     </header>
 
+    <!--Pop-up Panels-->
+    <div id="fields-editor" class="panel">
+        <div id="add-field-interface">
+            Add Field
+            <div class="editor-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="text" name="field-name" placeholder="New Field Name">
+                    <input type="text" name="field-regex-pattern" placeholder="Regex Pattern">
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+
+        <div id="configure-field-interface">
+            Configure Fields
+            <div class="editor-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="text" name="field-name" placeholder="New Field Name">
+                    <input type="text" name="field-regex-pattern" placeholder="Regex Pattern">
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+
     {% block body %}{% endblock %}
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
-</html>
+</html> 
