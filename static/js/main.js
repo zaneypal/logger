@@ -93,44 +93,83 @@ loggerFile.addEventListener('change', function() {
     selectedFileName.textContent = this.files[0].name;
     uploadButton.classList.add('ready');
     
-    if (uploadOptionText.checked === true && headerFormat.value === '') {
+    if (importCustom.checked === true && importFormat.value === '') {
         uploadButton.classList.remove('ready');
     }
 })
 
-const uploadOptionText = document.getElementById('upload-option3'); 
-const uploadOption = document.getElementById('upload-option2'); 
-const headerFormat = document.getElementById('upload-option-other');
-uploadOptionText.addEventListener('mouseup', function() {
-    headerFormat.disabled = false;
+const importCustom = document.getElementById('upload-option3'); 
+const importAuto = document.getElementById('upload-option2'); 
+const importFormat = document.getElementById('upload-option-other');
+const pasteCustom = document.getElementById('upload-option5');
+const pasteAuto = document.getElementById('upload-option4');
+const pasteFormat = document.getElementById('upload-option-other-paste');
+const pasteBox = document.getElementById('text-box');
+
+importCustom.addEventListener('mouseup', function() {
+    importFormat.disabled = false;
     uploadButton.classList.remove('ready')
 })
 
 document.querySelector('label[for="upload-option3"]').addEventListener('mouseup', function() {
-    headerFormat.disabled = false;
+    importFormat.disabled = false;
     uploadButton.classList.remove('ready')
 })
 
-uploadOption.addEventListener('mouseup', function() {
-    headerFormat.disabled = true;
+importAuto.addEventListener('mouseup', function() {
+    importFormat.disabled = true;
     if (loggerFile.value != '') {
         uploadButton.classList.add('ready');
     }
 })
 
 document.querySelector('label[for="upload-option2"]').addEventListener('mouseup', function() {
-    headerFormat.disabled = true;
+    importFormat.disabled = true;
     if (loggerFile.value != '') {
         uploadButton.classList.add('ready');
     }
 })
 
-headerFormat.addEventListener('input', function() {
-    if (headerFormat.value === '') {
+importFormat.addEventListener('input', function() {
+    if (importFormat.value === '') {
         uploadButton.classList.remove('ready');
     } else {
         if (loggerFile.value != '') {
             uploadButton.classList.add('ready');
+        }
+    }
+})
+
+pasteCustom.addEventListener('mouseup', function() {
+    pasteFormat.disabled = false;
+    submitButton.classList.remove('ready')
+})
+
+document.querySelector('label[for="upload-option5"]').addEventListener('mouseup', function() {
+    pasteFormat.disabled = false;
+    submitButton.classList.remove('ready')
+})
+
+pasteAuto.addEventListener('mouseup', function() {
+    pasteFormat.disabled = true;
+    if (pasteBox.value != '') {
+        submitButton.classList.add('ready');
+    }
+})
+
+document.querySelector('label[for="upload-option4"]').addEventListener('mouseup', function() {
+    pasteFormat.disabled = true;
+    if (pasteBox.value != '') {
+        submitButton.classList.add('ready');
+    }
+})
+
+pasteFormat.addEventListener('input', function() {
+    if (pasteFormat.value === '') {
+        submitButton.classList.remove('ready');
+    } else {
+        if (pasteBox.value != '') {
+            submitButton.classList.add('ready');
         }
     }
 })

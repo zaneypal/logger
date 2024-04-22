@@ -46,6 +46,12 @@
             <h3>Paste your logs here</h3>
             <form method="POST" enctype="multipart/form-data">
                 <textarea id="paste-logs-field" name="log-text-field" id="text-box" cols="50" rows="10" placeholder="Paste your log text here..." oninput="activateButton()"></textarea>
+                <h4>Upload Options</h4>
+                <input type="radio" name="upload-option-paste" value="auto" id="upload-option4" checked="checked">
+                <label for="upload-option4" class="upload-option">Let Logger auto-detect headers</label><br>
+                <input type="radio" name="upload-option-paste" value="custom" id="upload-option5">
+                <label for="upload-option5" class="upload-option">Follow this specific header format (use commas):</label><br>
+                <input type="text" name="header-format-paste" class="upload-option" id="upload-option-other-paste" placeholder="e.g. date,time,ip-address..." disabled><br><br>
                 <input type="submit" value="Submit" id="submit-btn">
             </form>
         </div>

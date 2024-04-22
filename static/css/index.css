@@ -60,7 +60,7 @@ label[for="loggerfile"]:hover span {
     font-size: 14px;
 }
 
-#upload-option-other {
+input[type='text'].upload-option {
     width: 300px;
     max-width: 300px;
 }

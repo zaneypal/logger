@@ -16,12 +16,14 @@
 <div class="logs-view">
     <table id="auto-fields" class="log-view">
         <tr>
+            <th></th>
         {% for header in headers %}
             <th>{{ header }}</th>
         {% endfor %}
         </tr>
         {% for field in fields %}
         <tr>
+            <td><b>{{ loop.index }}</b></td>
             {% for index in range(len(field)) %}
             <td>{{ field[index] }}</td>
             {% endfor %}      

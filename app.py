@@ -37,7 +37,7 @@ with app.app_context():
 
 app.app_context().push()
 
-logger_config = "date,time,ip_address,username,operating_system,request,command,protocol,status_code,object,file_size,data_in,data_out,hostname"
+logger_config = "date,time,ip_address,username,operating_system,user_agent,request,command,protocol,status_code,object,file_size,data_in,data_out,hostname"
 
 # Redirects user to homepage when visting the site
 @app.route('/', methods=['POST', 'GET'])
@@ -55,21 +55,26 @@ def index():
                 filename = file.filename
                 data = file.read()
 
+                if request.form['upload-option'] == "custom":
+                    header_format = request.form['header-format']
+                else:
+                    header_format = "auto"
+
             # Allows user to also upload logs by pasting text
             else:
                 data = request.form['log-text-field'].encode()
                 filename = 'Pasted Log'
-            
+
+                if request.form['upload-option-paste'] == "custom":
+                    header_format = request.form['header-format-paste']
+                else:
+                    header_format = "auto"
+                    
             try:
                 if request.form['remove-empty-lines']:
                     no_empty_lines = True
             except:
                 no_empty_lines = False
-            
-            if request.form['upload-option'] == "custom":
-                header_format = request.form['header-format']
-            else:
-                header_format = "auto"
 
             current_datetime = get_exact_datetime()
             db.session.add(recentFile(name=filename, content=data, upload_date=current_datetime, no_empty_lines=no_empty_lines, header_format=header_format))
@@ -97,8 +102,10 @@ def view_log(file, tag):
         loggerSession.query.delete()
         logs_result = db.session.execute(db.select(recentFile).where(and_(recentFile.name == file, recentFile.upload_date == tag))).scalar()
         if logs_result.header_format != 'auto':
-            logger_config = logs_result.header_format
-        db.session.add(loggerSession(config=True, data=logger_config))
+            data = logs_result.header_format
+        else:
+            data = logger_config
+        db.session.add(loggerSession(config=True, data=data))
         db.session.commit()
         
         logs = logs_result.content.decode().split('\n')

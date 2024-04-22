@@ -20,9 +20,9 @@
     text-align: left;
     border-spacing: 10px 1px;
     background-color: #8f5a0b;
-    overflow: auto;
     white-space: nowrap;
     margin: 10px 30px;
+    overflow-x: auto;
     display: none;
 }
 
