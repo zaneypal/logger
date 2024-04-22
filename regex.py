@@ -42,10 +42,11 @@ patterns = {
     'request': [1, re.compile(r"(?:GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)", re.IGNORECASE)],
     'command': [1, re.compile(r"")],
     'protocol': [1, re.compile(r"(?:TCP/IP|SMTP|PPP|FTP|SFTP|HTTPS?|TELNET|POP3|IPV[46]|ICMP|UDP|IMAP|SSH|Gopher)", re.IGNORECASE)],
-    'status_code': [1, re.compile(r"[1-5][0-9]{2}")],
+    'status_code': [1, re.compile(r"\s([1-5][0-9]{2})\s")],
+    'object': [1, re.compile(r"\/?\w*\.[a-z]{3,4}")],
+    'file_size': [1, re.compile(r"\d+[kmgtpezyKMGTPEZY][bB](?: |)")],
     'data_in': [1, re.compile(r"\d+[kmgtpezyKMGTPEZY][bB](?: |)in")],
     'data_out': [1, re.compile(r"\d+[kmgtpezyKMGTPEZY][bB](?: |)out")],
-    'file_size': [1, re.compile(r"\d+[kmgtpezyKMGTPEZY][bB](?: |)")],
     'operating_system': [1, re.compile(r"(?:windows|mac|linux|ubuntu|fedora|freebsd|android|solaris|ms-dos)", re.IGNORECASE)]
 }
 

@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Wix+Madefor+Display:wght@400..800&family=Libre+Franklin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <title>Logger &#8212; Free Log Analyzer</title>
     {% block head %}{% endblock %}
+    <link rel="icon" href="{{ url_for('static', filename='images/logger_logo.png') }}" type="image/x-icon">
 </head>
 <body>
     <div id="overlay"></div>
@@ -20,19 +21,15 @@
     <header>
         <h1><a href="{{url_for('index')}}">Logger &#8212; Free Log Analyzer</a></h1>
         <div id="top-bar">
-            <button class="top-bar-option" id="option-file" onclick="openSecondBar('file')">File</button>
-            <button class="top-bar-option" id="option-edit" onclick="openSecondBar('edit')">Edit</button>
+            <!--<button class="top-bar-option" id="option-file" onclick="openSecondBar('file')">File</button>-->
+            <!--<button class="top-bar-option" id="option-edit" onclick="openSecondBar('edit')">Edit</button>-->
             <button class="top-bar-option" id="option-view" onclick="openSecondBar('view')">View</button>
-            <button class="top-bar-option" id="option-format" onclick="openSecondBar('format')">Format</button>
+            <!--<button class="top-bar-option" id="option-format" onclick="openSecondBar('format')">Format</button>-->
             <button class="top-bar-option" id="option-regex" onclick="openSecondBar('regex')">RegEx Search</button>
         </div>
         
         <div class="secondary-bar" id="file-options">
-            <button>New Logger Session</button>
-            <button>Open Existing Logger Session</button>
-            <button>Save</button>
-            <button>Save As</button>
-            <button>Settings</button>
+            <button>Export As...</button>
         </div>
 
         <div class="secondary-bar" id="edit-options">

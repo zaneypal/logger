@@ -37,7 +37,7 @@ with app.app_context():
 
 app.app_context().push()
 
-logger_config = "date,time,ip_address,username,operating_system,request,command,protocol,status_code,data_in,data_out,file_size,hostname"
+logger_config = "date,time,ip_address,username,operating_system,request,command,protocol,status_code,object,file_size,data_in,data_out,hostname"
 
 # Redirects user to homepage when visting the site
 @app.route('/', methods=['POST', 'GET'])
@@ -95,42 +95,44 @@ def view_log(file, tag):
             return redirect(url_for('query_log', file=file, tag=tag, pattern=pattern))
     else:
         loggerSession.query.delete()
+        logs_result = db.session.execute(db.select(recentFile).where(and_(recentFile.name == file, recentFile.upload_date == tag))).scalar()
+        if logs_result.header_format != 'auto':
+            logger_config = logs_result.header_format
         db.session.add(loggerSession(config=True, data=logger_config))
         db.session.commit()
         
-        logs_result = db.session.execute(db.select(recentFile).where(and_(recentFile.name == file, recentFile.upload_date == tag))).scalar()
         logs = logs_result.content.decode().split('\n')
         logger_fields = logger_config.split(',')
-        
 
-        delimiter = ', '
-        for line in logs:
-            line_data = {}
+        if logs_result.header_format == 'auto':
+            logger_data = {}
             for field in logger_fields:
-                line_data[field] = ''
+                logger_data[field] = ""
 
-            log_values = line.split(delimiter)
-            for value in log_values:
-                for field in logger_fields:
-                    if match:= re.search(patterns[field][1], value):
+            for line in logs:
+                logger_data_str = ""
+                for field in logger_data.keys():
+                    if match:= re.search(patterns[field][1], line):
                         if patterns[field][0] == 1:
-                            line_data[field] = match.group()
+                            logger_data[field]=match.group()
                         elif patterns[field][0] == 2:    
-                            line_data[field] = format_date(match.group())
-                        logger_fields.remove(field)
-                        break            
-            
-            logger_fields = logger_config.split(',')
+                            logger_data[field]=format_date(match.group())
+                    if field == list(logger_data.keys())[-1]:
+                        logger_data_str += logger_data[field]
+                    else:
+                        logger_data_str += f"{logger_data[field]},"
+                db.session.add(loggerSession(config=False, data=logger_data_str))     
+                db.session.commit()
+        else:
+            delimiter = ','
+            for line in logs:
+                log_values = line.split(delimiter)
+                line_data = ','.join(log_values)
+                db.session.add(loggerSession(config=False, data=line_data))
+                db.session.commit
+                    
 
-            
-            line_data_list = list()
-            for field in logger_fields:
-                line_data_list.append(line_data[field])
-            line_data_str = ','.join(line_data_list)
-            db.session.add(loggerSession(config=False, data=line_data_str))     
-            db.session.commit()
-
-        # Logger Table
+        # Logger Tables
         logger_result = loggerSession.query.filter(loggerSession.config == False).all()
         header_result = loggerSession.query.filter(loggerSession.config == True).scalar()
         temp, field_data = [], []
