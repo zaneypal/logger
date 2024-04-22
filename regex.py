@@ -31,14 +31,14 @@ def format_date(date_str):
     if date == False:
         return None
     else:
-        return f"{date.year}-{date.month}-{date.day}"
+        return f"{date.month}/{date.day}/{date.year}"
 
 patterns = {
+    'date': [2, re.compile(r"(?:[JFMASOND][a-z]{2,8} (?:(?:30|31)|[0-2]?[0-9]), \d{4})|(?:(?:\d{1,2}(?:\/|-| |)){2}\d{2,4})")],
+    'time': [1, re.compile(r"(?:(?:1[0-2]|0?[0-9])(?::[0-5][0-9]){1,2} ?(?:AM|PM)?)|(?:(?:2[0-3]|1[0-9]|0?[0-9])(?::[0-5][0-9]){1,2})", re.IGNORECASE)],
     'hostname': [1, re.compile(r"(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?")],
     'username': [1, re.compile(r"[a-z]{4,}\w*")],
     'ip_address': [1, re.compile(r"(?:25[0-5]|(?:2[0-4]|1[0-9]|[1-9]|)[0-9]\.){3}(?:25[0-5]|(?:2[0-4]|1[0-9]|[1-9]|)[0-9])")],
-    'date': [2, re.compile(r"(?:[JFMASOND][a-z]{2,8} (?:(?:30|31)|[0-2]?[0-9]), \d{4})|(?:(?:\d{1,2}(?:\/|\.|-| |)){2}\d{2,4})")],
-    'time': [1, re.compile(r"(?:(?:1[0-2]|0?[0-9])(?::[0-5][0-9]){1,2} ?(?:AM|PM)?)|(?:(?:2[0-3]|1[0-9]|0?[0-9])(?::[0-5][0-9]){1,2})", re.IGNORECASE)],
     'request': [1, re.compile(r"(?:GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)", re.IGNORECASE)],
     'command': [1, re.compile(r"")],
     'protocol': [1, re.compile(r"(?:TCP/IP|SMTP|PPP|FTP|SFTP|HTTPS?|TELNET|POP3|IPV[46]|ICMP|UDP|IMAP|SSH|Gopher)", re.IGNORECASE)],

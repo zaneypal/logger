@@ -5,13 +5,18 @@
 #option-regex {
     display: inline;       
 }
+
+#auto-fields-btn {
+    visibility: hidden;
+}
 </style>
 {% endblock %}
 
 {% block body %}
 <div class="logs-view">
     <h2>Search results for {{ pattern }} :</h2>
-    <table id="raw-log" class="raw-log active">
+
+    <table id="raw-log" class="log-view active">
         <tr>
             <th class="line-number">Line</th>
             <th>Log Message</th>
@@ -24,7 +29,7 @@
         {% endfor %}
     </table>
 
-    <table id="matches-only" class="raw-log">
+    <table id="matches-only" class="log-view">
         <tr>
             <th class="line-number">Line</th>
             <th>Log Message</th>
@@ -33,19 +38,6 @@
         <tr>
             <td class="line-number">{{ loop.index }}</td>
             <td class="log-field">{{ result }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <table id="empty-lines">
-        <tr>
-            <th class="line-number">Line</th>
-            <th>Log Message</th>
-        </tr>
-        {% for line in no_empty_lines %}
-        <tr>
-            <td class="line-number">{{ loop.index }}</td>
-            <td class="log-field">{{ line }}</td>
         </tr>
         {% endfor %}
     </table>

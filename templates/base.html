@@ -20,12 +20,11 @@
     <header>
         <h1><a href="{{url_for('index')}}">Logger &#8212; Free Log Analyzer</a></h1>
         <div id="top-bar">
-            <button class="top-bar-option" onclick="openSecondBar('file')">File</button>
-            <button class="top-bar-option" onclick="openSecondBar('edit')">Edit</button>
-            <button class="top-bar-option" onclick="openSecondBar('view')">View</button>
-            <button class="top-bar-option" onclick="openSecondBar('format')">Format</button>
+            <button class="top-bar-option" id="option-file" onclick="openSecondBar('file')">File</button>
+            <button class="top-bar-option" id="option-edit" onclick="openSecondBar('edit')">Edit</button>
+            <button class="top-bar-option" id="option-view" onclick="openSecondBar('view')">View</button>
+            <button class="top-bar-option" id="option-format" onclick="openSecondBar('format')">Format</button>
             <button class="top-bar-option" id="option-regex" onclick="openSecondBar('regex')">RegEx Search</button>
-            <button class="top-bar-option"><a href="{{ url_for('test') }}">DevTools</a></button>
         </div>
         
         <div class="secondary-bar" id="file-options">
@@ -37,21 +36,20 @@
         </div>
 
         <div class="secondary-bar" id="edit-options">
-            <button id="cut-button">Cut</button>
-            <button id="copy-button">Copy</button>
-            <button id="paste-button">Paste</button>
+            <button id="cut-btn">Cut</button>
+            <button id="copy-btn">Copy</button>
+            <button id="paste-btn">Paste</button>
         </div>
 
         <div class="secondary-bar" id="view-options">
-            <button id="auto-fields-button" onclick="toggleTable('auto-fields')">Logger Table</button>
-            <button id="raw-log-button" class="active" onclick="toggleTable('raw-log')">Raw Log</button>
-            <button id="matches-only-button" onclick="toggleTable('matches-only')">Show only Lines that Match Regex</button>
-            <button id="empty-lines-button" onclick="toggleTable('empty-lines')">No Empty Lines</button>
+            <button id="auto-fields-btn" class="table-btn" onclick="toggleTable('auto-fields')">Logger Table</button>
+            <button id="raw-log-btn" class="active table-btn" onclick="toggleTable('raw-log')">Raw Log</button>
+            <button id="matches-only-btn" class="table-btn" onclick="toggleTable('matches-only')">Show only Lines that Match Regex</button>
         </div>
 
         <div class="secondary-bar" id="format-options">
-            <button onclick="openPanel('fields-editor')">Configure Fields</button>
-            <button>Add Field</button>
+            <button onclick="openPanel('fields-editor', 'configure')">Configure Fields</button>
+            <button onclick="openPanel('fields-editor', 'add')">Add Field</button>
             <button>Change Delimiter</button>
         </div>
 
@@ -65,8 +63,8 @@
 
     <!--Pop-up Panels-->
     <div id="fields-editor" class="panel">
-        <div id="add-field-interface">
-            Add Field
+        <div id="configure-field-interface">
+            Configure Fields
             <div class="editor-body">
                 <form method="POST" enctype="multipart/form-data">
                     <input type="text" name="field-name" placeholder="New Field Name">
@@ -76,8 +74,8 @@
             </div>
         </div>
 
-        <div id="configure-field-interface">
-            Configure Fields
+        <div id="add-field-interface">
+            Add Field
             <div class="editor-body">
                 <form method="POST" enctype="multipart/form-data">
                     <input type="text" name="field-name" placeholder="New Field Name">

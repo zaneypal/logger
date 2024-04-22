@@ -18,11 +18,15 @@
     overflow: hidden;
 }
 
+.upload-form * {
+    user-select: none;
+}
+
 #loggerfile {
     visibility: hidden;
 }
 
-label {
+label[for="loggerfile"] {
     border-radius: 5px;
     outline: solid 2px #276fce00;
     padding: 50px 160px;
@@ -34,7 +38,7 @@ label {
     position: relative;
 }
 
-label span {
+label[for="loggerfile"] span {
     font-family: "Sarabun";
     text-transform: uppercase;
     color: #276fce;
@@ -45,11 +49,24 @@ label span {
     right: 0;
 }
 
-label:hover span {
+label[for="loggerfile"]:hover span {
     color: #3bc1ff;
     text-shadow: 0 0 1.2px #00ccff;
     transition: color 0.12s,
                 text-shadow 0.12s;
+}
+
+.upload-option {
+    font-size: 14px;
+}
+
+#upload-option-other {
+    width: 300px;
+    max-width: 300px;
+}
+
+#upload-option1 {
+    margin-left: 5px;
 }
 
 #upload-icon {

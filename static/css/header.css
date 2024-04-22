@@ -37,19 +37,13 @@
     color: white;
 }
 
-/* Doesn't work right now
-.top-bar-option:active > #secondary-bar {
-    animation: slideDown 1s;
-}
-*/
-
 .secondary-bar {
     display: none;
     width: 100%;
     height: 40px;
     max-height: 40px;
     padding-left: 30px;
-    border-top: solid 2px #4f6b4c;
+    border-top: solid 1.2px #4f6b4c;
 }
 
 .secondary-bar.active {
@@ -90,18 +84,17 @@
                 color 0.3s;
 }
 
-#auto-fields-button.active {
+#auto-fields-btn.active {
     background-color: #e4433a;
     color: white;
 }
 
-#raw-log-button.active,
-#matches-only-button.active {
+#raw-log-btn.active {
     background-color: #4780fa;
     color: #ffffff;
 }
 
-#empty-lines-button.active {
+#matches-only-btn.active {
     background-color: #1eb65d;
     color: white;
 }

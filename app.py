@@ -24,18 +24,20 @@ class recentFile(db.Model):
     name: Mapped[str] = mapped_column(nullable=False)
     content: Mapped[str] = mapped_column(nullable=False)
     upload_date: Mapped[str] = mapped_column(nullable=False)
+    no_empty_lines: Mapped[bool] = mapped_column(nullable=False)
+    header_format: Mapped[str]
 
 class loggerSession(db.Model):
     line: Mapped[int] = mapped_column(primary_key=True)
     config: Mapped[bool]
     data: Mapped[str]
-
+    
 with app.app_context():
     db.create_all() 
 
 app.app_context().push()
 
-logger_config = "hostname,username,ip_address,date,time,request,command,protocol,status_code,data_in,data_out,file_size,operating_system"
+logger_config = "date,time,ip_address,username,operating_system,request,command,protocol,status_code,data_in,data_out,file_size,hostname"
 
 # Redirects user to homepage when visting the site
 @app.route('/', methods=['POST', 'GET'])
@@ -58,8 +60,19 @@ def index():
                 data = request.form['log-text-field'].encode()
                 filename = 'Pasted Log'
             
+            try:
+                if request.form['remove-empty-lines']:
+                    no_empty_lines = True
+            except:
+                no_empty_lines = False
+            
+            if request.form['upload-option'] == "custom":
+                header_format = request.form['header-format']
+            else:
+                header_format = "auto"
+
             current_datetime = get_exact_datetime()
-            db.session.add(recentFile(name=filename, content=data, upload_date=current_datetime))
+            db.session.add(recentFile(name=filename, content=data, upload_date=current_datetime, no_empty_lines=no_empty_lines, header_format=header_format))
             db.session.commit()
             tag = db.session.execute(db.select(recentFile.upload_date).where(recentFile.upload_date == current_datetime)).scalar()
 
@@ -87,40 +100,46 @@ def view_log(file, tag):
         
         logs_result = db.session.execute(db.select(recentFile).where(and_(recentFile.name == file, recentFile.upload_date == tag))).scalar()
         logs = logs_result.content.decode().split('\n')
-
-        logger_data = {}
         logger_fields = logger_config.split(',')
-        for field in logger_fields:
-            logger_data[field] = ""
+        
 
+        delimiter = ', '
         for line in logs:
-            logger_data_str = ""
-            for field in logger_data.keys():
-                if match:= re.search(patterns[field][1], line):
-                    if patterns[field][0] == 1:
-                        logger_data[field]=match.group()
-                    elif patterns[field][0] == 2:    
-                        logger_data[field]=format_date(match.group())
-                if field == list(logger_data.keys())[-1]:
-                    logger_data_str += logger_data[field]
-                else:
-                    logger_data_str += f"{logger_data[field]},"
-            db.session.add(loggerSession(config=False, data=logger_data_str))     
+            line_data = {}
+            for field in logger_fields:
+                line_data[field] = ''
+
+            log_values = line.split(delimiter)
+            for value in log_values:
+                for field in logger_fields:
+                    if match:= re.search(patterns[field][1], value):
+                        if patterns[field][0] == 1:
+                            line_data[field] = match.group()
+                        elif patterns[field][0] == 2:    
+                            line_data[field] = format_date(match.group())
+                        logger_fields.remove(field)
+                        break            
+            
+            logger_fields = logger_config.split(',')
+
+            
+            line_data_list = list()
+            for field in logger_fields:
+                line_data_list.append(line_data[field])
+            line_data_str = ','.join(line_data_list)
+            db.session.add(loggerSession(config=False, data=line_data_str))     
             db.session.commit()
 
+        # Logger Table
         logger_result = loggerSession.query.filter(loggerSession.config == False).all()
         header_result = loggerSession.query.filter(loggerSession.config == True).scalar()
-        
-        temp = []
-        field_data = []
+        temp, field_data = [], []
         for res in logger_result:
             temp.append(res.data)
         for data in temp:
             field_data.append(data.split(','))
 
-        temp = str()
-        temp += header_result.data
-        temp = temp.split(",")
+        temp = str(header_result.data).split(",")
         header_data = []
         for data in temp:
             header_data.append(data.replace("_", " ").title())
@@ -132,7 +151,10 @@ def view_log(file, tag):
             else:
                 no_empty_lines.append(line)
         
-        return render_template('logger-session.html', logs=logs, headers=header_data, fields=field_data, no_empty_lines=no_empty_lines)
+        if logs_result.no_empty_lines == 1:
+            logs = no_empty_lines
+            
+        return render_template('logger-session.html', logs=logs, headers=header_data, fields=field_data)
 
 # Lets user find regex matches of uploaded log file
 @app.route('/loggerquery/<file>?tag=<tag>?query=<pattern>', methods=['GET', 'POST'])
@@ -163,10 +185,6 @@ def query_log(file, tag, pattern):
                 no_empty_lines.append(line)
         
     return render_template('logger-query.html', results=results, matches_only=matches_only, no_empty_lines=no_empty_lines, pattern=f"'{pattern}'")
-
-@app.route('/test')
-def test():
-    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

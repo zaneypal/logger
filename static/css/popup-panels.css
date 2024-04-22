@@ -5,7 +5,7 @@
     top: 0;
     bottom: 0;
     margin: auto;
-    z-index: 2;
+    z-index: 4;
     text-align: center;
     padding: 5px;
     width: 500px;
@@ -15,6 +15,15 @@
     background-color: white;
     overflow: hidden;
     display: none;
+}
+
+.panel.ready {
+    display: block;
+}
+
+.panel.ready #configure-fields-interface.ready,
+.panel.ready #add-fields-interface.ready {
+    display: block;
 }
 
 #editor-body {
@@ -31,6 +40,7 @@
     margin-top: 10px;
 }
 
-#add-field-interface {
+#configure-fields-interface,
+#add-fields-interface {
     display: none;
 }

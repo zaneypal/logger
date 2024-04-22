@@ -37,7 +37,7 @@
     padding: 10px;
 }
 
-#raw-log {
+.log-view {
     width: 100%;
     margin-top: 20px;
     display: none;
@@ -49,10 +49,6 @@ th.line-number {
 
 .line-number {
     width: 5%;
-}
-
-#matches-only {
-    display: none;
 }
 
 #empty-lines {

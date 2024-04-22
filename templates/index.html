@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block head %}
-
+<style>
+#option-view, #option-format {
+    display: none;
+}
+</style>
 {% endblock %}
 
 {% block body %}
@@ -14,9 +18,17 @@
                     <img src="static/images/upload-icon.png" alt="Upload Button" id="upload-icon">
                     <span id="selected-filename">Browse Files</span>
                 </label>
+                <h4>Upload Options</h4>
+                <input type="checkbox" name="remove-empty-lines" value="1" id="upload-option1">
+                <label for="upload-option1" class="upload-option">Remove empty lines</label><br>
+                <input type="radio" name="upload-option" value="auto" id="upload-option2" checked="checked">
+                <label for="upload-option2" class="upload-option">Let Logger auto-detect headers</label><br>
+                <input type="radio" name="upload-option" value="custom" id="upload-option3">
+                <label for="upload-option3" class="upload-option">Follow this specific header format (use commas):</label><br>
+                <input type="text" name="header-format" class="upload-option" id="upload-option-other" placeholder="e.g. date,time,ip-address..." disabled>
                 <input type="submit" value="Upload" id="upload-button">
             </form>
-
+            
             {%  if turnOn == True %}
                 <h3>Recent</h3>
                 {% for file in recent_files %}

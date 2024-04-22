@@ -21,6 +21,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
+    z-index: 2;
     user-select: none;
     overflow: hidden;
     background: linear-gradient(to right, #96ff76, #59ffca, #a8ff6a, #84ff84, #bdff6d, #96ffa6)
@@ -49,16 +50,21 @@ mark {
     background-color: #4fdd8d;
     color: #212121;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-right: 1px;
 }
 
 #overlay {
-    background-color: #2121215c;
-    z-index: 1;
+    background-color: #21212121;
+    z-index: 3;
     display: none;
-    position: absolute;
+    position: fixed;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     margin: auto;
+}
+
+#overlay.on {
+    display: block;
 }
