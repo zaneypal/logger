@@ -196,4 +196,4 @@ def query_log(file, tag, pattern):
     return render_template('logger-query.html', results=results, matches_only=matches_only, no_empty_lines=no_empty_lines, pattern=f"'{pattern}'")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
